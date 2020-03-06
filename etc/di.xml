@@ -3,12 +3,24 @@
 	<preference for="Neon\Rms\Api\RmsSendRepositoryInterface" type="Neon\Rms\Model\RmsSendRepository"/>
 	<preference for="Neon\Rms\Api\Data\RmsSendInterface" type="Neon\Rms\Model\Data\RmsSend"/>
 	<preference for="Neon\Rms\Api\Data\RmsSendSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
-	<virtualType name="Neon\Rms\Model\ResourceModel\RmsSend\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+	<!--
+  <virtualType name="Neon\Rms\Model\ResourceModel\RmsSend\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
 		<arguments>
 			<argument name="mainTable" xsi:type="string">neon_rms_rmssend</argument>
 			<argument name="resourceModel" xsi:type="string">Neon\Rms\Model\ResourceModel\RmsSend\Collection</argument>
 		</arguments>
 	</virtualType>
+-->
+  
+  <type name="Neon\Rms\Model\ResourceModel\RmsSend\Grid\Collection">
+      <arguments>
+        <argument name="mainTable" xsi:type="string">neon_rms_rmssend</argument>
+        <argument name="eventPrefix" xsi:type="string">neon_rms_rmssend_grid_collection</argument>
+        <argument name="eventObject" xsi:type="string">rmssend_grid_collection</argument>
+        <argument name="resourceModel" xsi:type="string">Neon\Rms\Model\ResourceModel\RmsSend</argument>
+    </arguments>
+</type>
+  
 	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
 		<arguments>
 			<argument name="collections" xsi:type="array">
