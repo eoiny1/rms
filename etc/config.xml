@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<rms>
+			<api_settings>
+				<secret_key/>
+				<access_identifier/>
+				<database_name/>
+				<database_server/>
+				<database_login_name/>
+				<database_login_password/>
+				<rms_type/>
+				<instance_name/>
+				<api_endpoint/>
+				<post_url/>
+				<peek_url/>
+			</api_settings>
+		</rms>
+	</default>
+</config>

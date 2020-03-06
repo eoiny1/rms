@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Neon\Rms\Api\RmsSendRepositoryInterface" type="Neon\Rms\Model\RmsSendRepository"/>
+	<preference for="Neon\Rms\Api\Data\RmsSendInterface" type="Neon\Rms\Model\Data\RmsSend"/>
+	<preference for="Neon\Rms\Api\Data\RmsSendSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="Neon\Rms\Model\ResourceModel\RmsSend\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">neon_rms_rmssend</argument>
+			<argument name="resourceModel" xsi:type="string">Neon\Rms\Model\ResourceModel\RmsSend\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="neon_rms_rmssend_listing_data_source" xsi:type="string">Neon\Rms\Model\ResourceModel\RmsSend\Grid\Collection</item>
+				<item name="neon_rms_rmsdownload_listing_data_source" xsi:type="string">Neon\Rms\Model\ResourceModel\RmsDownload\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+	<preference for="Neon\Rms\Api\RmsSendOrderRepositoryInterface" type="Neon\Rms\Model\RmsSendOrderRepository"/>
+	<preference for="Neon\Rms\Api\Data\RmsSendOrderInterface" type="Neon\Rms\Model\Data\RmsSendOrder"/>
+	<preference for="Neon\Rms\Api\Data\RmsSendOrderSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<preference for="Neon\Rms\Api\RmsSendCrRepositoryInterface" type="Neon\Rms\Model\RmsSendCrRepository"/>
+	<preference for="Neon\Rms\Api\Data\RmsSendCrInterface" type="Neon\Rms\Model\Data\RmsSendCr"/>
+	<preference for="Neon\Rms\Api\Data\RmsSendCrSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<preference for="Neon\Rms\Api\RmsDownloadRepositoryInterface" type="Neon\Rms\Model\RmsDownloadRepository"/>
+	<preference for="Neon\Rms\Api\Data\RmsDownloadInterface" type="Neon\Rms\Model\Data\RmsDownload"/>
+	<preference for="Neon\Rms\Api\Data\RmsDownloadSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="Neon\Rms\Model\ResourceModel\RmsDownload\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">neon_rms_rmsdownload</argument>
+			<argument name="resourceModel" xsi:type="string">Neon\Rms\Model\ResourceModel\RmsDownload\Collection</argument>
+		</arguments>
+	</virtualType>
+</config>

@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="rms" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+			<label>RMS</label>
+			<tab>neonconfig</tab>
+			<resource>Neon_Rms::config_neon_rms</resource>
+			<group id="api_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>API Settings</label>
+				<field id="secret_key" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="0" translate="label" type="obscure">
+					<label>Secret Key</label>
+					<comment/>
+					<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+					<config_path>rms/api_settings/secret_key</config_path>
+				</field>
+				<field id="access_identifier" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="1" translate="label" type="obscure">
+					<label>Access Identifier</label>
+					<comment/>
+					<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+					<config_path>rms/api_settings/access_identifier</config_path>
+				</field>
+				<field id="database_name" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="text">
+					<label>Database Name</label>
+					<comment/>
+				</field>
+				<field id="database_server" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>database_server</label>
+					<comment/>
+				</field>
+				<field id="database_login_name" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Database Login Name</label>
+					<comment/>
+				</field>
+				<field id="database_login_password" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="obscure">
+					<label>Database Password</label>
+					<comment/>
+					<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+					<config_path>rms/api_settings/database_login_password</config_path>
+				</field>
+				<field id="rms_type" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="text">
+					<label>RMS Type</label>
+					<comment/>
+				</field>
+				<field id="instance_name" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="text">
+					<label>InstanceName</label>
+					<comment/>
+				</field>
+				<field id="api_endpoint" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="text">
+					<label>Endpoint</label>
+					<comment/>
+				</field>
+				<field id="post_url" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="text">
+					<label>Post URL</label>
+					<comment/>
+				</field>
+				<field id="peek_url" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="text">
+					<label>Peek URL</label>
+					<comment/>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Magento_Backend::stores">
+					<resource id="Magento_Backend::stores_settings">
+						<resource id="Magento_Config::config">
+							<resource id="Neon_Rms::config_neon_rms" title="rms"/>
+						</resource>
+					</resource>
+				</resource>
+				<resource id="Neon_Rms::RmsSend" sortOrder="10" title="RmsSend">
+					<resource id="Neon_Rms::RmsSend_save" sortOrder="10" title="Save RmsSend"/>
+					<resource id="Neon_Rms::RmsSend_delete" sortOrder="20" title="Delete RmsSend"/>
+					<resource id="Neon_Rms::RmsSend_update" sortOrder="30" title="Update RmsSend"/>
+					<resource id="Neon_Rms::RmsSend_view" sortOrder="40" title="View RmsSend"/>
+				</resource>
+				<resource id="Neon_Rms::RmsDownload" sortOrder="10" title="RmsDownload">
+					<resource id="Neon_Rms::RmsDownload_save" sortOrder="10" title="Save RmsDownload"/>
+					<resource id="Neon_Rms::RmsDownload_delete" sortOrder="20" title="Delete RmsDownload"/>
+					<resource id="Neon_Rms::RmsDownload_update" sortOrder="30" title="Update RmsDownload"/>
+					<resource id="Neon_Rms::RmsDownload_view" sortOrder="40" title="View RmsDownload"/>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

@@ -1,0 +1,26 @@
+{
+    "name": "neon/module-rms",
+    "description": "Magento RMS Connector ",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        },
+        {
+            "name": "Eoin Gannon",
+            "email": "rossespoint11@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Neon\\Rms\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}
