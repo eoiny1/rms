@@ -76,16 +76,16 @@ protected function _initSelect()
     parent::_initSelect();
   
         $this->getSelect()->joinLeft(
-                ['rmssendorder' => $this->getTable('neon_rmstest_rmssendorder')],
+                ['rmssendorder' => $this->getTable('neon_rms_rmssendorder')],
                 'main_table.rmssend_id = rmssendorder.rms_send_id AND main_table.sent_type = 1',
-               ['rmssendorder.order_id as order_id']
+               ['rmssendorder.order_increment as order_id']
             );
   
         
       $this->getSelect()->joinLeft(
-                ['rmssendcr' => $this->getTable('neon_rmstest_rmssendcr')],
+                ['rmssendcr' => $this->getTable('neon_rms_rmssendcr')],
                 'main_table.rmssend_id = rmssendcr.rms_send_id AND main_table.sent_type = 2',
-               ['rmssendcr.cr_id as cr_id']
+                ['rmssendcr.cr_increment as cr_id']
             );
   
   
