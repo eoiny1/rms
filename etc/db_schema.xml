@@ -30,6 +30,8 @@
 		<column identity="false" name="order_item_id" nullable="false" xsi:type="int"/>
 		<column length="255" name="order_increment" nullable="true" xsi:type="varchar"/>
 		<column length="255" name="sent_sku" nullable="true" xsi:type="varchar"/>
+    <column identity="false" name="qty" nullable="false" xsi:type="int"/>
+    <column identity="false" name="product_id" nullable="false" xsi:type="int"/>
     <index referenceId="RMSENDORDER_RMS_SEND_ID" indexType="btree">
         <column name="rms_send_id"/>
      </index>
@@ -46,6 +48,8 @@
 		<column identity="false" name="order_id" nullable="true" xsi:type="int"/>
 		<column length="255" name="cr_increment" nullable="false" xsi:type="varchar"/>
 		<column length="255" name="sent_sku" nullable="true" xsi:type="varchar"/>
+    <column identity="false" name="qty" nullable="false" xsi:type="int"/>
+    <column identity="false" name="product_id" nullable="false" xsi:type="int"/>
     <index referenceId="RMSENDCR_RMS_SEND_ID" indexType="btree">
         <column name="rms_send_id"/>
      </index>

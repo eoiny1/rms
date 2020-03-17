@@ -17,6 +17,9 @@ interface RmsSendOrderInterface extends \Magento\Framework\Api\ExtensibleDataInt
     const ORDER_ITEM_ID = 'order_item_id';
     const RMSSENDORDER_ID = 'rmssendorder_id';
     const ORDER_INCREMENT = 'order_increment';
+    const QTY = 'qty';
+    const PRODUCT_ID = 'product_id';
+  
 
     /**
      * Get rmssendorder_id
@@ -110,5 +113,43 @@ interface RmsSendOrderInterface extends \Magento\Framework\Api\ExtensibleDataInt
      * @return \Neon\Rms\Api\Data\RmsSendOrderInterface
      */
     public function setSentSku($sentSku);
+  
+  
+  
+    /**
+     * Get qty
+     * @return string|null
+     */
+    public function getQty();
+
+    /**
+     * Set qty
+     * @param string $qty
+     * @return \Neon\Rms\Api\Data\RmsSendOrderInterface
+     */
+    public function setQty($qty);
+  
+  
+     /**
+     * Get product_id
+     * @return string|null
+     */
+    public function getProductId();
+
+    /**
+     * Set product_id
+     * @param string $product_id
+     * @return \Neon\Rms\Api\Data\RmsSendOrderInterface
+     */
+    public function setProductId($product_id);
+  
+  
+  
+  
+  
+  
+  
+  
+  
 }
 

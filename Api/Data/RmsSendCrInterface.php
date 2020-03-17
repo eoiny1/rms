@@ -18,6 +18,8 @@ interface RmsSendCrInterface extends \Magento\Framework\Api\ExtensibleDataInterf
     const RMSSENDCR_ID = 'rmssendcr_id';
     const CR_ID = 'cr_id';
     const ORDER_INCREMENT = 'order_increment';
+    const QTY = 'qty';
+    const PRODUCT_ID = 'product_id';
 
     /**
      * Get rmssendcr_id
@@ -124,5 +126,37 @@ interface RmsSendCrInterface extends \Magento\Framework\Api\ExtensibleDataInterf
      * @return \Neon\Rms\Api\Data\RmsSendCrInterface
      */
     public function setSentSku($sentSku);
+  
+    /**
+    * Get qty
+    * @return string|null
+    */
+    public function getQty();
+
+    /**
+     * Set qty
+     * @param string $qty
+     * @return \Neon\Rms\Api\Data\RmsSendCrInterface
+     */
+    public function setQty($qty);
+  
+  
+     /**
+     * Get product_id
+     * @return string|null
+     */
+    public function getProductId();
+
+    /**
+     * Set product_id
+     * @param string $product_id
+     * @return \Neon\Rms\Api\Data\RmsSendCrInterface
+     */
+    public function setProductId($product_id);
+  
+  
+  
+  
+  
 }
 

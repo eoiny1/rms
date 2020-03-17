@@ -165,5 +165,57 @@ class RmsSendCr extends \Magento\Framework\Api\AbstractExtensibleObject implemen
     {
         return $this->setData(self::SENT_SKU, $sentSku);
     }
+  
+  
+  
+    /**
+     * Get qty
+     * @return string|null
+     */
+    public function getQty()
+    {
+        return $this->_get(self::Qty);
+    }
+
+    /**
+     * Set qty
+     * @param string $qty
+     * @return \Neon\Rms\Api\Data\RmsSendCrInterface
+     */
+    public function setQty($qty)
+    {
+        return $this->setData(self::QTY,$qty);
+    }
+  
+  
+  
+     /**
+     * Get product_id
+     * @return string|null
+     */
+    public function getProductId()
+    {
+        return $this->_get(self::PRODUCT_ID);
+    }
+
+    /**
+     * Set product_id
+     * @param string $product_id
+     * @return \Neon\Rms\Api\Data\RmsSendCrInterface
+     */
+    public function setQty($product_id)
+    {
+        return $this->setData(self::PRODUCT_ID,$product_id);
+    }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 }
 
