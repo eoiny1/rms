@@ -11,6 +11,19 @@
 		</arguments>
 	</virtualType>
 -->
+ <virtualType name="RMSLogger" type="Magento\Framework\Logger\Monolog">
+      <arguments>
+        <argument name="handlers" xsi:type="array">
+            <item name="info" xsi:type="object">Neon\Rms\Logger\Handler\InfoHandler</item>
+        </argument>
+      </arguments>
+  </virtualType>
+  
+  <type name="Neon\Rms\Observer\Sales\OrderPlaceAfter">
+    <arguments>
+        <argument name="logger" xsi:type="object">RMSLogger</argument>
+    </arguments>
+  </type>
   
   <type name="Neon\Rms\Model\ResourceModel\RmsSend\Grid\Collection">
       <arguments>
@@ -18,8 +31,8 @@
         <argument name="eventPrefix" xsi:type="string">neon_rms_rmssend_grid_collection</argument>
         <argument name="eventObject" xsi:type="string">rmssend_grid_collection</argument>
         <argument name="resourceModel" xsi:type="string">Neon\Rms\Model\ResourceModel\RmsSend</argument>
-    </arguments>
-</type>
+      </arguments>
+  </type>
   
 	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
 		<arguments>
