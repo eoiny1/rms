@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+	<event name="sales_order_creditmemo_save_before">
+		<observer instance="Neon\Rms\Observer\Backend\Sales\OrderCreditmemoSaveBefore" name="neon_rms_observer_backend_sales_ordercreditmemosavebefore_sales_order_creditmemo_save_before"/>
+	</event>
+</config>

@@ -25,6 +25,12 @@
     </arguments>
   </type>
   
+   <type name="Neon\Rms\Observer\Backend\Sales\OrderCreditmemoSaveBefore">
+    <arguments>
+        <argument name="logger" xsi:type="object">RMSLogger</argument>
+    </arguments>
+  </type>
+  
   <type name="Neon\Rms\Model\ResourceModel\RmsSend\Grid\Collection">
       <arguments>
         <argument name="mainTable" xsi:type="string">neon_rms_rmssend</argument>
