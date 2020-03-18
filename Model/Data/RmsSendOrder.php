@@ -154,7 +154,7 @@ class RmsSendOrder extends \Magento\Framework\Api\AbstractExtensibleObject imple
      */
     public function getQty()
     {
-        return $this->_get(self::Qty);
+        return $this->_get(self::QTY);
     }
 
     /**
@@ -183,7 +183,7 @@ class RmsSendOrder extends \Magento\Framework\Api\AbstractExtensibleObject imple
      * @param string $product_id
      * @return \Neon\Rms\Api\Data\RmsSendOrderInterface
      */
-    public function setQty($product_id)
+    public function setProductId($product_id)
     {
         return $this->setData(self::PRODUCT_ID,$product_id);
     }

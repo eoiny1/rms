@@ -174,7 +174,7 @@ class RmsSendCr extends \Magento\Framework\Api\AbstractExtensibleObject implemen
      */
     public function getQty()
     {
-        return $this->_get(self::Qty);
+        return $this->_get(self::QTY);
     }
 
     /**
@@ -203,7 +203,7 @@ class RmsSendCr extends \Magento\Framework\Api\AbstractExtensibleObject implemen
      * @param string $product_id
      * @return \Neon\Rms\Api\Data\RmsSendCrInterface
      */
-    public function setQty($product_id)
+    public function setProductId($product_id)
     {
         return $this->setData(self::PRODUCT_ID,$product_id);
     }
