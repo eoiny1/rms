@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-	<event name="sales_order_save_after">
+	<event name="sales_order_place_after">
 		<observer instance="Neon\Rms\Observer\Sales\OrderPlaceAfter" name="neon_rms_observer_sales_orderplaceafter_sales_order_place_after"/>
 	</event>
 </config>
+<!-- sales_order_place_after -->
+<!-- sales_order_save_after -->

@@ -17,7 +17,7 @@ interface RmsSendCrInterface extends \Magento\Framework\Api\ExtensibleDataInterf
     const CR_ITEM_ID = 'cr_item_id';
     const RMSSENDCR_ID = 'rmssendcr_id';
     const CR_ID = 'cr_id';
-    const ORDER_INCREMENT = 'order_increment';
+    const CR_INCREMENT = 'cr_increment';
     const QTY = 'qty';
     const PRODUCT_ID = 'product_id';
 
@@ -105,14 +105,14 @@ interface RmsSendCrInterface extends \Magento\Framework\Api\ExtensibleDataInterf
      * Get order_increment
      * @return string|null
      */
-    public function getOrderIncrement();
+    public function getCrIncrement();
 
     /**
      * Set order_increment
      * @param string $orderIncrement
      * @return \Neon\Rms\Api\Data\RmsSendCrInterface
      */
-    public function setOrderIncrement($orderIncrement);
+    public function setCrIncrement($crIncrement);
 
     /**
      * Get sent_sku

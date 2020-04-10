@@ -20,6 +20,10 @@ class Register extends \Magento\Framework\Model\AbstractModel {
   
      protected $rmsSendOrderInterface;
   
+     protected $rmsSendCrRepository;
+  
+     protected $rmsSendCrInterface;
+  
      protected $orderRepository;
      
   
@@ -39,6 +43,8 @@ class Register extends \Magento\Framework\Model\AbstractModel {
         \Neon\Rms\Api\Data\RmsSendInterface $rmsSendInterface,
         \Neon\Rms\Api\RmsSendOrderRepositoryInterface $rmsSendOrderRepository,
         \Neon\Rms\Api\Data\RmsSendOrderInterface $rmsSendOrderInterface,
+        \Neon\Rms\Api\RmsSendCrRepositoryInterface $rmsSendCrRepository,
+        \Neon\Rms\Api\Data\RmsSendCrInterface $rmsSendCrInterface,
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
     ) {
        
@@ -51,10 +57,9 @@ class Register extends \Magento\Framework\Model\AbstractModel {
         $this->rmsSendOrderRepository = $rmsSendOrderRepository;
         $this->rmsSendOrderInterface = $rmsSendOrderInterface;
       
+        $this->rmsSendCrRepository = $rmsSendCrRepository;
+        $this->rmsSendCrInterface = $rmsSendCrInterface;
       
-        
-      
-
     }
   
   

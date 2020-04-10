@@ -132,9 +132,9 @@ class RmsSendCr extends \Magento\Framework\Api\AbstractExtensibleObject implemen
      * Get order_increment
      * @return string|null
      */
-    public function getOrderIncrement()
+    public function getCrIncrement()
     {
-        return $this->_get(self::ORDER_INCREMENT);
+        return $this->_get(self::CR_INCREMENT);
     }
 
     /**
@@ -142,9 +142,9 @@ class RmsSendCr extends \Magento\Framework\Api\AbstractExtensibleObject implemen
      * @param string $orderIncrement
      * @return \Neon\Rms\Api\Data\RmsSendCrInterface
      */
-    public function setOrderIncrement($orderIncrement)
+    public function setCrIncrement($crIncrement)
     {
-        return $this->setData(self::ORDER_INCREMENT, $orderIncrement);
+        return $this->setData(self::CR_INCREMENT, $crIncrement);
     }
 
     /**
