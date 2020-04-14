@@ -19,12 +19,13 @@ class RegisterCrMemo extends \Neon\Rms\Model\Register {
       $rmsSendOrderInterface = $this->rmsSendCrInterface;
        
       $rmsSendOrderInterface->setRmsSendId($rms_send_id)
+        ->setCrId($item_data["cr_id"])
         ->setOrderId($item_data["order_id"])
         ->setCrItemId($item_data["cr_item_id"])
-        ->getCrIncrement($item_data["cr_increment"]);
-        #->setSentSku("sasadsadsa")
-        #->setQty($item_data["qty"])
-        #->setProductId($item_data["product_id"]);
+        ->setCrIncrement($item_data["cr_increment"])
+        ->setSentSku($item_data["sku"])
+        ->setQty($item_data["qty"])
+        ->setProductId($item_data["product_id"]);
        
         $this->rmsSendCrRepository->save($rmsSendOrderInterface); 
       

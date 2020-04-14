@@ -163,7 +163,7 @@ class RmsSendCr extends \Magento\Framework\Api\AbstractExtensibleObject implemen
      */
     public function setSentSku($sentSku)
     {
-        return $this->setData(self::SENT_SKU, $sentSku);
+        return $this->setData(self::SENT_SKU,$sentSku);
     }
   
   
