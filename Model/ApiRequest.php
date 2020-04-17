@@ -16,6 +16,12 @@ class ApiRequest extends \Magento\Framework\Model\AbstractModel {
     */
     protected $config;
   
+  
+    /**
+    *
+    */
+    protected $curlRequest;
+  
     
     /**
     *
@@ -30,6 +36,13 @@ class ApiRequest extends \Magento\Framework\Model\AbstractModel {
   
   
   
+    /**
+    *
+    */
+    protected $_millis = 24576;
+    
+  
+  
 
      /**
      * @param \Neon\Rms\Helper\Config $config
@@ -38,11 +51,13 @@ class ApiRequest extends \Magento\Framework\Model\AbstractModel {
      */
     protected function __construct(
       \Neon\Rms\Helper\Config $config,
+      \Neon\Rms\Helper\Curl $curl, 
        \Magento\Framework\Model\Context $context,
        \Magento\Framework\Registry $registry
     ) {
       
         $this->config = $config;
+        $this->curlRequest = $curl;
        
         parent::__construct($context, $registry);
 
@@ -63,7 +78,7 @@ class ApiRequest extends \Magento\Framework\Model\AbstractModel {
       "api_endpoint" =>  $this->config->getApiEndpoint(),
       "instance_name" => $this->config->getInstanceName(),
       "database_server" => $this->config->getDatabaseServer(),
-      "database_login_name" => $this->config->getDatabaseName()
+      "database_login_name" => $this->config->getDatabaseLoginName()
     );
  
  }
@@ -100,9 +115,8 @@ public function getPostUrl() {
  /**
  *
  **/ 
- public function getHeader() {
+ public function getHeader($payload) {
    
-  $payload =  $this->getPayload();
   $access_identifier = $this->config->getAccessIdentifier();
   $secret_key = $this->config->getSecretKey();
    
@@ -110,7 +124,73 @@ public function getPostUrl() {
    
   return array("User-Agent: runscope/0.1","X-Access-Identifier: $access_identifier","X-Payload-Signature: $x_payload_signature");
    
- }  
+ } 
+  
+  
+/**
+*
+**/  
+public function sendRequest($config = array()) {
+  
+  $postUrl = (isset($config["post_url"]))?$config["post_url"]:$this->getPostUrl();
+  $payload = (isset($config["payload"]))?$config["payload"]:$this->getPayload();
+    
+  $reponse = $this->curlRequest->curlAction($postUrl,$payload,$this->getHeader($payload));
+  
+  return $reponse;
+  
+} 
+  
+  
+
+/**
+*
+**/
+public function getInteraction($postResponse) {
+  
+      if(array_key_exists("interaction",$postResponse))
+          return $postResponse["interaction"];
+  
+} 
+  
+
+ /**
+ *
+ **/
+ protected function getPeekPayLoad($interaction) {
+  
+  $postData = array(
+	  "interaction" =>$interaction,
+	  "timeout_millis" => $this->getMillis()
+  );
+  
+  $payload = json_encode($postData); 
+  
+  return $payload;
+  
+}  
+  
+  
+/**
+*
+*/ 
+protected function getMillis() {
+  
+  return $this->_millis;
+  
+}  
+  
+  
+  
+/**
+*
+*/ 
+protected function setMillis($millis) {
+  
+  $this->_millis = $millis;
+  
+}  
+  
   
   
   

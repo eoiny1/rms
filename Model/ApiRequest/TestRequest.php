@@ -13,7 +13,7 @@ class TestRequest extends \Neon\Rms\Model\ApiRequest {
 
   
   
-   protected $_request = "ping";
+   protected $_request = "Ping";
 
   
      /**
@@ -23,10 +23,11 @@ class TestRequest extends \Neon\Rms\Model\ApiRequest {
      */
     public function __construct(
       \Neon\Rms\Helper\Config $config,
+       \Neon\Rms\Helper\Curl $curl,
        \Magento\Framework\Model\Context $context,
        \Magento\Framework\Registry $registry
     ) {
-        parent::__construct($config,$context, $registry);
+        parent::__construct($config,$curl,$context,$registry);
       
        $this->setPostData();
 
