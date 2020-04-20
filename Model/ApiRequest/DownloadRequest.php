@@ -14,6 +14,12 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
   
   
    protected $_request = "ProductMetadataFetch";
+  
+   protected $_asseturl = "";
+  
+   protected $_file_helper;
+  
+   protected $_csv_helper;
 
   
      /**
@@ -24,10 +30,16 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
     public function __construct(
       \Neon\Rms\Helper\Config $config,
        \Neon\Rms\Helper\Curl $curl,
+       \Neon\Rms\Helper\File $file,
+       \Neon\Rms\Helper\Csv $csv,
        \Magento\Framework\Model\Context $context,
        \Magento\Framework\Registry $registry
     ) {
         parent::__construct($config,$curl,$context,$registry);
+      
+        $this->_file_helper = $file;
+      
+        $this->_csv_helper = $csv;
       
         $this->setPostData();
 
@@ -46,6 +58,9 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
       $finalResponse =  $this->loopToGetDownloadResponse($interaction);
       
       
+      return $this;
+      
+      
     }
   
   
@@ -62,8 +77,6 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
       sleep($sleeptime);
     
      for($x = 0; $x <= 5; $x++) {
-       
-      
         
        $peekyPayload = $this->getPeekPayLoad($interaction);
        
@@ -74,15 +87,71 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
        printf("reposnse:%s \n",print_r($response,1));
       
        if(isset($response["asset_url"]))
-          return $response["asset_url"];
+          return $this->_asseturl = $response["asset_url"];
       
-        sleep(30);
+        sleep(20);
       }
       
       
     }
   
   
+  /**
+  *
+  */
+  public function downloadGz() {
+    
+     if($this->_asseturl !='') {
+      
+        $date = date('mdY_His');
+		    $downloadDir = $this->_file_helper->getCsvBaseDir();
+		    $fileName = "product_inventory_fetch.".$date;
+		    $filePathGZ = $downloadDir.$fileName.".json.gz";
+      
+        $gzFile = file_get_contents($this->_asseturl);
+
+			  file_put_contents($filePathGZ,$gzFile);
+
+        $this->createCSVFromGz($filePathGZ);
+    }
+    
+  }
+  
+  
+  /**
+  *
+  */
+  protected function createCSVFromGz($filePathGZ) {
+    
+    	$lines = gzfile($filePathGZ);
+			$jsonStr = "";
+			foreach ($lines as $line) {
+					$jsonStr .= $line;
+			}
+    
+     $inventoryArray = json_decode($jsonStr,true);
+    
+     $inventoryCSVArray = array(array("sku","qty","price","cost"));
+        
+      foreach($inventoryArray["variant"] as $key => $item) {
+        
+          $qty = (int)$item["provider"]["available_qty"];
+        
+          if($qty < 0)
+				     $qty = "0";
+        
+          $price = $item["retail_price"];
+          $cost = $item["cost"];
+			
+          $inventoryCSVArray[] = array($item["sku"],$qty,$price,$cost);
+        
+			}
+    
+     $filePathCsv = preg_replace("/\.json\.gz/",".csv",$filePathGZ);
+    
+     $this->_csv_helper->writeToCsv($inventoryCSVArray,$filePathCsv);
+
+  }
   
   
   
