@@ -20,6 +20,10 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
    protected $_file_helper;
   
    protected $_csv_helper;
+  
+  protected  $_updateInventory;
+  
+   protected $_inventoryUpdateArray = array();
 
   
      /**
@@ -32,6 +36,7 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
        \Neon\Rms\Helper\Curl $curl,
        \Neon\Rms\Helper\File $file,
        \Neon\Rms\Helper\Csv $csv,
+       \Neon\Rms\Model\UpdateInventory $updateInventory,
        \Magento\Framework\Model\Context $context,
        \Magento\Framework\Registry $registry
     ) {
@@ -40,6 +45,8 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
         $this->_file_helper = $file;
       
         $this->_csv_helper = $csv;
+      
+        $this->_updateInventory = $updateInventory; 
       
         $this->setPostData();
 
@@ -115,6 +122,9 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
         $this->createCSVFromGz($filePathGZ);
     }
     
+    
+    return $this;
+    
   }
   
   
@@ -132,20 +142,29 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
      $inventoryArray = json_decode($jsonStr,true);
     
      $inventoryCSVArray = array(array("sku","qty","price","cost"));
+    
+     $inventoryUpdateArray = array();
         
       foreach($inventoryArray["variant"] as $key => $item) {
         
-          $qty = (int)$item["provider"]["available_qty"];
-        
-          if($qty < 0)
-				     $qty = "0";
-        
           $price = $item["retail_price"];
           $cost = $item["cost"];
+          $qty = (int)$item["provider"]["available_qty"];
+          $qty = ($qty < 0)?"0":$qty;
+          $sku = $item["sku"];
 			
-          $inventoryCSVArray[] = array($item["sku"],$qty,$price,$cost);
+          $inventoryCSVArray[] = array($sku,$qty,$price,$cost);
+        
+          $inventoryUpdateArray[$sku] = array(
+              "sku"=>$sku,
+              "qty"=>$qty,
+              "price"=> $price,
+              "cost"=> $cost 
+            );
         
 			}
+    
+     $this->setInventoryUpdate($inventoryUpdateArray);
     
      $filePathCsv = preg_replace("/\.json\.gz/",".csv",$filePathGZ);
     
@@ -153,6 +172,39 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
 
   }
   
+  
+  /**
+  *
+  */
+  public function setInventoryUpdate($inventoryUpdateArray) {
+    $this->_inventoryUpdateArray = $inventoryUpdateArray;
+    
+  }
+  
+  /**
+  *
+  */
+  public function getInventoryUpdate() {
+    
+    return $this->_inventoryUpdateArray;
+    
+  }
+  
+  
+  /**
+  *
+  */
+  public function updateInventory() {
+    
+    $inventoryArray =  $this->getInventoryUpdate();
+    
+    echo "\n\n gotten this far \n\n";
+    
+    $this->_updateInventory->importQty($inventoryArray);
+    
+    return $this;
+    
+  }
   
   
   
