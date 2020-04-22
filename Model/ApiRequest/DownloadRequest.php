@@ -13,17 +13,20 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
 
   
   
-   protected $_request = "ProductMetadataFetch";
+    protected $_request = "ProductMetadataFetch";
   
-   protected $_asseturl = "";
+    protected $_asseturl = "";
   
-   protected $_file_helper;
+    protected $_file_helper;
   
-   protected $_csv_helper;
+    protected $_csv_helper;
   
-  protected  $_updateInventory;
+    protected  $_updateInventory;
   
-   protected $_inventoryUpdateArray = array();
+    protected $_inventoryUpdateArray = array();
+  
+    protected $_rmsDownloadInterface;
+  
 
   
      /**
@@ -37,6 +40,7 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
        \Neon\Rms\Helper\File $file,
        \Neon\Rms\Helper\Csv $csv,
        \Neon\Rms\Model\UpdateInventory $updateInventory,
+       \Neon\Rms\Api\Data\RmsDownloadInterface $rmsDownloadInterface,
        \Magento\Framework\Model\Context $context,
        \Magento\Framework\Registry $registry
     ) {
@@ -48,6 +52,8 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
       
         $this->_updateInventory = $updateInventory; 
       
+        $this->_rmsDownloadInterface = $rmsDownloadInterface;
+      
         $this->setPostData();
 
     }
@@ -58,6 +64,7 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
     *
     */
     public function call() {
+      
       
       $response = $this->sendRequest();
       $interaction = $this->getInteraction($response);
@@ -93,10 +100,13 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
        
        printf("reposnse:%s \n",print_r($response,1));
       
-       if(isset($response["asset_url"]))
-          return $this->_asseturl = $response["asset_url"];
-      
-        sleep(20);
+       if(isset($response["asset_url"])) {
+         $this->_rmsDownloadInterface->setGzUrl($response["asset_url"]);
+         return $this->_asseturl = $response["asset_url"];
+       }
+        
+       sleep(20);
+       
       }
       
       
@@ -200,12 +210,24 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
     
     echo "\n\n gotten this far \n\n";
     
+    $this->_rmsDownloadInterface->setSuccess("1");
+    
     $this->_updateInventory->importQty($inventoryArray);
     
     return $this;
     
   }
   
+  
+  
+  /**
+  *
+  */
+  public function getRmsDownloadInterface() {
+    
+    return $this->_rmsDownloadInterface;
+    
+  }
   
   
   

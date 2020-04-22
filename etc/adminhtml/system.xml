@@ -58,6 +58,15 @@
 					<comment/>
 				</field>
 			</group>
-		</section>
+      
+      <group id="download_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
+        <label>Download Settings</label>
+         <field id="last_order_limit" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					  <label>Last Order Limit Time</label>
+            <comment>Show the Hour</comment>
+				</field>
+      </group>
+		
+    </section>
 	</system>
 </config>

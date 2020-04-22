@@ -21,6 +21,8 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
   
     protected $_productIdBySku;
   
+    protected $_lastorders;
+  
   
      /**
      * @param \Magento\Framework\Model\Context $context
@@ -33,7 +35,8 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
       \Magento\InventoryApi\Api\SourceItemRepositoryInterface $sourceItemRepository,
       \Magento\Framework\Api\SearchCriteriaBuilderFactory $searchCriteriaBuilderFactory,
       \Magento\CatalogImportExport\Model\StockItemImporterInterface $importer,
-      \Magento\InventoryCatalogApi\Model\GetProductIdsBySkusInterface $productIdBySku
+      \Magento\InventoryCatalogApi\Model\GetProductIdsBySkusInterface $productIdBySku,
+      \Neon\Rms\Model\UpdateInventory\LastOrders $lastorders
     ) {
        
         parent::__construct($context, $registry);
@@ -43,6 +46,7 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
         $this->_searchCriteriaBuilderFactory  = $searchCriteriaBuilderFactory;
         $this->_importer = $importer;
         $this->_productIdBySku = $productIdBySku;
+        $this->_lastorders = $lastorders;
       
 
     }
@@ -85,14 +89,16 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
     
     $sourceItems = $this->getAllSourceItems();
     
-    
-    
+    $sku_to_exclude_array = $this->getSkusToExclude();
     
     $stockUpdateArray = []; 
     
     foreach ($sourceItems as $sourceItem) { 
       
       $sku = $sourceItem->getSku();
+      
+      if(isset($sku_to_exclude_array[$sku]))
+          continue;
       
       if(isset($inventoryArray[$sku])) {
         
@@ -164,6 +170,17 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
     
   }
   
+  
+  
+  /**
+  *
+  */
+  protected function getSkusToExclude() {
+    
+    return $this->_lastorders->getSkuToExclude();
+    
+    
+  }
   
 
   

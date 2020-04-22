@@ -35,6 +35,8 @@ class Config extends AbstractHelper
   const POST_URL = "rms/api_settings/post_url";
   const PEEK_URL = "rms/api_settings/peek_url";
   
+  const LAST_ORDER_LIMIT = "rms/download_settings/last_order_limit";
+  
   
   
     /**
@@ -238,6 +240,25 @@ class Config extends AbstractHelper
         );
 
     }
+  
+  
+  /**
+  *
+  **/
+  public function getLastOrderLimit($storeId = null) {
+    
+       return $this->scopeConfig->getValue(
+            self::LAST_ORDER_LIMIT,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+   
+  }
+    
+  
+  
+  
+  
   
 
 
