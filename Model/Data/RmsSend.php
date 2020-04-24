@@ -222,5 +222,51 @@ class RmsSend extends \Magento\Framework\Api\AbstractExtensibleObject implements
     {
         return $this->setData(self::CALL_TIME, $callTime);
     }
+  
+  
+  
+    /**
+     * Get locked
+     * @return string|null
+     */
+    public function getLocked()
+    {
+        return $this->_get(self::LOCKED);
+    }
+
+    /**
+     * Set locked
+     * @param string $locked
+     * @return \Neon\Rms\Api\Data\RmsSendInterface
+     */
+    public function setlocked($locked)
+    {
+        return $this->setData(self::LOCKED,$locked);
+    }
+  
+  
+     /**
+     * Get success
+     * @return string|null
+     */
+    public function getSuccess()
+    {
+        return $this->_get(self::SUCCESS);
+    }
+
+    /**
+     * Set success
+     * @param string $success
+     * @return \Neon\Rms\Api\Data\RmsSendInterface
+     */
+    public function setSuccess($success)
+    {
+        return $this->setData(self::SUCCESS,$success);
+    }
+  
+  
+  
+  
+  
 }
 

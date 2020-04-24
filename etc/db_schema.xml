@@ -10,10 +10,12 @@
 		<column name="sent_status" nullable="true" xsi:type="smallint"/>
 		<column name="created_at" nullable="false"  on_update="false" default="CURRENT_TIMESTAMP" xsi:type="timestamp" />
 		<column name="update_at"   on_update="true" nullable="false" default="CURRENT_TIMESTAMP" xsi:type="timestamp" />
-		<column identity="false" name="rms_ticket" nullable="true" xsi:type="int"/>
+		<column identity="false" name="rms_ticket" nullable="true" xsi:type="varchar"/>
 		<column name="error_message" nullable="true" xsi:type="text"/>
 		<column identity="false" name="send_attempt" nullable="true" xsi:type="int"/>
 		<column name="prev_status" nullable="true" xsi:type="smallint"/>
+    <column name="locked" nullable="true" xsi:type="smallint"/>
+    <column name="success" nullable="true" xsi:type="smallint"/>
 		<column length="255" name="call_time" nullable="true" xsi:type="varchar"/>
     <index referenceId="RMSEND_CREATED_AT" indexType="btree">
         <column name="created_at"/>

@@ -21,6 +21,9 @@ interface RmsSendInterface extends \Magento\Framework\Api\ExtensibleDataInterfac
     const CALL_TIME = 'call_time';
     const RMS_TICKET = 'rms_ticket';
     const CREATED_AT = 'created_at';
+    const LOCKED = 'locked';
+    const SUCCESS = 'success';
+  
 
     /**
      * Get rmssend_id
@@ -166,5 +169,37 @@ interface RmsSendInterface extends \Magento\Framework\Api\ExtensibleDataInterfac
      * @return \Neon\Rms\Api\Data\RmsSendInterface
      */
     public function setCallTime($callTime);
+  
+  
+     /**
+     * Get locked
+     * @return string|null
+     */
+    public function getLocked();
+      
+      
+     /**
+     * Set locked
+     * @param string $locked
+     * @return \Neon\Rms\Api\Data\RmsSendInterface
+     */
+    public function setlocked($locked);
+      
+      
+     /**
+     * Get success
+     * @return string|null
+     */
+    public function getSuccess();
+      
+     
+     /**
+     * Set success
+     * @param string $success
+     * @return \Neon\Rms\Api\Data\RmsSendInterface
+     */
+    public function setSuccess($success);
+      
+  
 }
 

@@ -68,9 +68,9 @@ class ApiRequest extends \Magento\Framework\Model\AbstractModel {
   *
   */
   
-  public function setPostData() {
+  public function setPostData($extra_payload_array = array()) {
    
-   $this->_postData  =  array(
+    $deafult_payload =  array(
       "database_name" => $this->config->getDatabaseName(),
       "rms_type" => $this->config->getRmsType(),
       "request" => $this->_request,
@@ -80,9 +80,15 @@ class ApiRequest extends \Magento\Framework\Model\AbstractModel {
       "database_server" => $this->config->getDatabaseServer(),
       "database_login_name" => $this->config->getDatabaseLoginName()
     );
+    
+    
+    $this->_postData = array_merge($deafult_payload,$extra_payload_array);
  
  }
   
+
+ 
+   
   
  /**
  *
