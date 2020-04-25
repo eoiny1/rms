@@ -121,11 +121,79 @@ class PackageOrder extends \Magento\Framework\Model\AbstractModel {
     $rmsSendOrders =  $this->_rmsSendOrderRepository->getList($this->buildRmsOrderSendSearchCriteria())->getItems();    
     
     foreach ($rmsSendOrders as $orderItem) {
-       print_r($orderItem->getSentSku());
-     }
-    
+      
+       $rms_send_id = $orderItem->getRmsSendId();
+      
+       $this->getPackageItem($orderItem);
+      
+       $this->_timer->start();
+      
+       $this->_productInventoryUpdateRequest->call();
+            
+       $this->_timer->stop();
+      
+       $this->registerSentItem($rms_send_id);
+        
+    }
     
   }
+  
+  
+ /**
+ *
+ */ 
+ protected function getPackageItem($orderItem) {
+   
+  $sku = $orderItem->getSentSku();
+  $qty = $orderItem->getQty();
+  $rms_send_id = $orderItem->getRmsSendId();
+  $order_increment = $orderItem->getOrderIncrement();
+  $order_item_id = $orderItem->getOrderItemId();
+  $notes =  $order_increment.$sku.$order_item_id.$rms_send_id;
+  
+  $this->_productInventoryUpdateRequest->addExtraPayload(array(
+   "payload"=>
+    array(
+      "action"=> array(array(
+        "new_value"=>$qty,
+        "status"=>"sold",
+        "action"=>"change_qty",
+        "notes"=>$notes
+      )),
+	    "sku"=> $sku
+    )
+   )
+  );
+   
+ } 
+  
+ /**
+ *
+ */
+  protected function registerSentItem($rms_send_id) {
+    
+    $rmsSedObj = $this->_rmsSendRepository->get($rms_send_id);
+  
+    if($this->_productInventoryUpdateRequest->getSuccess() == 0)
+        $new_send_status = 3;
+    else 
+       $new_send_status = 2; 
+    
+    $rmsSedObj->setSentStatus($new_send_status)
+    ->setErrorMessage($this->_productInventoryUpdateRequest->getMessage())
+    ->setSuccess($this->_productInventoryUpdateRequest->getSuccess())
+    ->setPrevStatus($rmsSedObj->getSentStatus())
+    ->setLocked(0)
+    ->setSendAttempt(1)
+    ->setRmsTicket($this->_productInventoryUpdateRequest->getRmsTicket())
+    ->setCallTime($this->_timer->getElapsedTime());
+  
+    $this->_rmsSendRepository->save($rmsSedObj);
+       
+    
+  }
+  
+  
   
   
   /**
