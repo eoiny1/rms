@@ -97,8 +97,8 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
       
       $sku = $sourceItem->getSku();
       
-      #if(isset($sku_to_exclude_array[$sku]))
-          #continue;
+      if(isset($sku_to_exclude_array[$sku]))
+          continue;
       
       if(isset($inventoryArray[$sku])) {
         
