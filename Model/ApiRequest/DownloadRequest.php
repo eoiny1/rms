@@ -86,7 +86,7 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
       printf("interaction:%s \n\n",$interaction);
       
       //TAKE SMALL BREAK 
-      $sleeptime = 60 * 4;
+      $sleeptime = 60 * 2;
       
       sleep($sleeptime);
     

@@ -44,6 +44,8 @@ class ProductInventoryUpdateRequest extends \Neon\Rms\Model\ApiRequest {
   */
   public function addExtraPayload($extra_payload_array) {
     
+     printf("extra_payload_array:%s \n",print_r($extra_payload_array,1));
+    
      $this->setPostData($extra_payload_array);
     
   }
@@ -108,19 +110,26 @@ class ProductInventoryUpdateRequest extends \Neon\Rms\Model\ApiRequest {
     */
    protected function setSuccessAndMessage($response) {
      
-     if(array_key_exists("message",$response)) {
+     if(array_key_exists("response_message_unavailable",$response)) {
        
+       if($response["response_message_unavailable"] == 1) {
+         $this->setSuccess($response["success"]);
+       }
+       
+       
+     } else {
+       
+      if(array_key_exists("message",$response)) {
       if($response["message"]["payload"]["success"] == 1) {
 				$this->setSuccess(1);
-			}else{
-        
+      }else{
         if(isset($response["message"]["payload"]["exception_reason"])) {
           $this->setMessage($response["message"]["payload"]["exception_reason"]);
         }
-				
 			}
-      
      }
+       
+    }
      
    }
   
