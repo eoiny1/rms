@@ -71,24 +71,7 @@ class RmsDownload extends \Magento\Framework\Api\AbstractExtensibleObject implem
         return $this->_setExtensionAttributes($extensionAttributes);
     }
 
-    /**
-     * Get updated_at
-     * @return string|null
-     */
-    public function getUpdatedAt()
-    {
-        return $this->_get(self::UPDATED_AT);
-    }
 
-    /**
-     * Set updated_at
-     * @param string $updatedAt
-     * @return \Neon\Rms\Api\Data\RmsDownloadInterface
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        return $this->setData(self::UPDATED_AT, $updatedAt);
-    }
 
     /**
      * Get status

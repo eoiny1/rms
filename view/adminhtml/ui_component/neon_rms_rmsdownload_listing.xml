@@ -4,6 +4,15 @@
 		<item name="js_config" xsi:type="array">
 			<item name="provider" xsi:type="string">neon_rms_rmsdownload_listing.neon_rms_rmsdownload_listing_data_source</item>
 		</item>
+     <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">download</item>
+                <item name="label" xsi:type="string" translate="true">Download From RMS</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/download</item>
+            </item>
+        </item>
+    
 	</argument>
 	<settings>
 		<spinner>neon_rms_rmsdownload_columns</spinner>
@@ -49,12 +58,6 @@
 			<settings>
 				<filter>text</filter>
 				<label translate="true">created_at</label>
-			</settings>
-		</column>
-		<column name="updated_at">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">updated_at</label>
 			</settings>
 		</column>
 		<column name="status">

@@ -63,7 +63,6 @@
 			<column name="rmsdownload_id"/>
 		</constraint>
 		<column name="created_at" nullable="false"  on_update="false" default="CURRENT_TIMESTAMP" xsi:type="timestamp" />
-		<column name="update_at"   on_update="true" nullable="false" default="CURRENT_TIMESTAMP" xsi:type="timestamp" />
 		<column name="status" nullable="false" xsi:type="smallint"/>
 		<column name="success" nullable="true" xsi:type="smallint"/>
 		<column length="255" name="gz_url" nullable="true" xsi:type="varchar"/>

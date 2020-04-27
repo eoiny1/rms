@@ -17,7 +17,6 @@ interface RmsDownloadInterface extends \Magento\Framework\Api\ExtensibleDataInte
     const CSV_NAME = 'csv_name';
     const LOCKED = 'locked';
     const STATUS = 'status';
-    const UPDATED_AT = 'updated_at';
     const DOWNLOAD_TIME = 'download_time';
     const DOWNLOAD_TYPE = 'download_type';
     const SUCCESS = 'success';
@@ -66,18 +65,6 @@ interface RmsDownloadInterface extends \Magento\Framework\Api\ExtensibleDataInte
         \Neon\Rms\Api\Data\RmsDownloadExtensionInterface $extensionAttributes
     );
 
-    /**
-     * Get updated_at
-     * @return string|null
-     */
-    public function getUpdatedAt();
-
-    /**
-     * Set updated_at
-     * @param string $updatedAt
-     * @return \Neon\Rms\Api\Data\RmsDownloadInterface
-     */
-    public function setUpdatedAt($updatedAt);
 
     /**
      * Get status

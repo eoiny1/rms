@@ -63,4 +63,21 @@
 			<argument name="resourceModel" xsi:type="string">Neon\Rms\Model\ResourceModel\RmsDownload\Collection</argument>
 		</arguments>
 	</virtualType>
+  
+  <type name="Magento\Framework\Console\CommandList">
+		<arguments>
+			<argument name="commands" xsi:type="array">
+				<item name="DownloadRms" xsi:type="object">Neon\Rms\Console\Command\DownloadRms</item>
+			</argument>
+		</arguments>
+	</type>
+  
+
+  
+   <type name="Neon\Rms\Model\Session">
+        <arguments>
+            <argument name="storage" xsi:type="object">Neon\Rms\Model\Session\Storage</argument>
+        </arguments>
+    </type>
+  
 </config>
