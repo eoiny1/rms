@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+	<group id="default">
+		<job instance="Neon\Rms\Cron\SendOrder" method="execute" name="neon_rms_sendorder">
+			<schedule>*/1 * * * *</schedule>
+		</job>
+		<job instance="Neon\Rms\Cron\SendCreditMemo" method="execute" name="neon_rms_sendcreditmemo">
+			<schedule>*/1 * * * *</schedule>
+		</job>
+	</group>
+</config>

@@ -73,6 +73,8 @@
 		<column name="download_log" nullable="true" xsi:type="text"/>
 		<column length="255" name="csv_name" nullable="true" xsi:type="varchar"/>
 		<column name="download_type" nullable="true" xsi:type="smallint"/>
+    <column identity="false" name="sku_added" nullable="true" xsi:type="int"/>
+    <column identity="false" name="sku_excluded" nullable="true" xsi:type="int"/>
 	</table>
   
 </schema>
