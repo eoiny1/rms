@@ -25,6 +25,11 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
   
     protected $_csv_helper;
   
+    protected $_sku_amount_uploaded = 0;
+  
+    protected $_sku_amount_excluded = 0;
+  
+
   
      /**
      * @param \Magento\Framework\Model\Context $context
@@ -95,6 +100,7 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
     $sourceItems = $this->getAllSourceItems();
     
     $sku_to_exclude_array = $this->getSkusToExclude();
+    $this->setSkuAmountExcluded(count($sku_to_exclude_array));
     
     $stockUpdateArray = []; 
     
@@ -152,7 +158,10 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
       $this->_csv_helper->writeToCsvWithName($backupOfPerviousArray,"backup_of_stock");
      
     
+    $this->setSkuAmountUploaded(count($stockUpdateArray));
     $stockUpdateArray = $this->addProductId($stockUpdateArray);
+    
+    
     
     return $stockUpdateArray;
 
@@ -210,26 +219,46 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
     
   }
   
-/**
+  
+  
+  /**
   *
   */
   public function getSkuAmountUploaded() {
     
-    return 0;
+    return $this->_sku_amount_uploaded;
+    
+  }
+  
+  
+  /**
+  *
+  */
+  public function setSkuAmountUploaded($amount) {
+    
+       $this->_sku_amount_uploaded = $amount;
     
   }
   
 
-/**
+
+  /**
   *
   */
   public function getSkuAmountExcluded() {
     
-    return 0;
+      return $this->_sku_amount_excluded;
     
   }
   
-
+  /**
+  *
+  */
+  protected function setSkuAmountExcluded($amount) {
+    
+     $this->_sku_amount_excluded = $amount;
+  
+  }
   
   
   
