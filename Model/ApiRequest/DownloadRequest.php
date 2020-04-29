@@ -28,7 +28,6 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
     protected $_rmsDownloadInterface;
   
 
-  
      /**
      * @param \Neon\Rms\Helper\Config $config 
      * @param \Magento\Framework\Model\Context $context
@@ -65,6 +64,7 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
     */
     public function call() {
       
+      $this->_rmsDownloadInterface->setSuccess("0");
       
       $response = $this->sendRequest();
       $interaction = $this->getInteraction($response);
@@ -86,8 +86,7 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
       printf("interaction:%s \n\n",$interaction);
       
       //TAKE SMALL BREAK 
-      $sleeptime = 60 * 2;
-      
+      $sleeptime = 60 * 1;
       sleep($sleeptime);
     
      for($x = 0; $x <= 5; $x++) {
@@ -96,20 +95,21 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
        
         printf("payload:%s \n",print_r($peekyPayload,1));
        
-       $response = $this->sendRequest(array("post_url"=>$this->config->getPeekUrl(),"payload"=>$peekyPayload));
+        $response = $this->sendRequest(array("post_url"=>$this->config->getPeekUrl(),"payload"=>$peekyPayload));
        
        printf("reposnse:%s \n",print_r($response,1));
       
        if(isset($response["asset_url"])) {
          $this->_rmsDownloadInterface->setGzUrl($response["asset_url"]);
+         $this->_rmsDownloadInterface->setSuccess("1");
          return $this->_asseturl = $response["asset_url"];
        }
         
-       sleep(20);
+       sleep(10);
        
       }
       
-      
+  
     }
   
   
@@ -178,6 +178,8 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
     
      $filePathCsv = preg_replace("/\.json\.gz/",".csv",$filePathGZ);
     
+     $this->_rmsDownloadInterface->setCsvName(basename($filePathCsv));
+    
      $this->_csv_helper->writeToCsv($inventoryCSVArray,$filePathCsv);
 
   }
@@ -210,9 +212,11 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
     
     echo "\n\n gotten this far \n\n";
     
-    $this->_rmsDownloadInterface->setSuccess("1");
-    
     $this->_updateInventory->importQty($inventoryArray);
+    
+    $this->_rmsDownloadInterface->setSkuAdded($this->_updateInventory->getSkuAmountUploaded());
+       
+    $this->_rmsDownloadInterface->setSkuExcluded($this->_updateInventory->getSkuAmountExcluded());   
     
     return $this;
     

@@ -19,6 +19,8 @@ class LastOrders extends \Magento\Framework\Model\AbstractModel {
   
     protected $_config;
   
+    protected $_csv_helper;
+  
   
      /**
      * @param \Magento\Framework\Model\Context $context
@@ -30,6 +32,7 @@ class LastOrders extends \Magento\Framework\Model\AbstractModel {
       \Magento\Sales\Api\OrderItemRepositoryInterface $orderItemRepository,
       \Magento\Framework\Api\SearchCriteriaBuilderFactory $searchCriteriaBuilderFactory,
       \Magento\Framework\Stdlib\DateTime\DateTime $date,
+      \Neon\Rms\Helper\Csv $csv,
       \Neon\Rms\Helper\Config $config
     ) {
        
@@ -39,6 +42,8 @@ class LastOrders extends \Magento\Framework\Model\AbstractModel {
         $this->_searchCriteriaBuilderFactory = $searchCriteriaBuilderFactory;
         $this->_date  = $date;
         $this->_config = $config;
+      
+        $this->_csv_helper = $csv;
 
     }
   
@@ -62,11 +67,17 @@ class LastOrders extends \Magento\Framework\Model\AbstractModel {
     
     $sku_exclude_array = [];
     
+    $sku_exclude_flat_array = [];
+    
     foreach ($orderItems as $item) {
       
       $sku_exclude_array[$item->getSku()] = $item->getSku();
+      $sku_exclude_flat_array[] = ["sku"=>$item->getSku()];
 
     }
+    
+    if($sku_exclude_flat_array)
+      $this->_csv_helper->writeToCsvWithName($sku_exclude_flat_array,"excluded_skus");
     
     return $sku_exclude_array;
     

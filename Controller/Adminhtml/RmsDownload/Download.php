@@ -61,8 +61,8 @@ class Download extends \Magento\Backend\App\Action
         $phpPath = $this->phpExecutableFinder->find() ?: 'php';
       
         try {
-            #this->shell->execute($phpPath . ' %s neon_rms:downloadrms &', [BP . '/bin/magento']);
-            $this->messageManager->addSuccessMessage(__('Download call started. Please refresh page in 5mins for results'));
+            $this->shell->execute($phpPath . ' %s neon_rms:downloadrms &', [BP . '/bin/magento']);
+            $this->messageManager->addSuccessMessage(__('Download is Finshed'));
         } catch (LocalizedException $e) {
             $this->messageManager->addNoticeMessage($e->getMessage());
         } catch (\Exception $e) {

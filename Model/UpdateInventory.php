@@ -23,6 +23,8 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
   
     protected $_lastorders;
   
+    protected $_csv_helper;
+  
   
      /**
      * @param \Magento\Framework\Model\Context $context
@@ -36,7 +38,8 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
       \Magento\Framework\Api\SearchCriteriaBuilderFactory $searchCriteriaBuilderFactory,
       \Magento\CatalogImportExport\Model\StockItemImporterInterface $importer,
       \Magento\InventoryCatalogApi\Model\GetProductIdsBySkusInterface $productIdBySku,
-      \Neon\Rms\Model\UpdateInventory\LastOrders $lastorders
+      \Neon\Rms\Model\UpdateInventory\LastOrders $lastorders,
+      \Neon\Rms\Helper\Csv $csv
     ) {
        
         parent::__construct($context, $registry);
@@ -48,11 +51,13 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
         $this->_productIdBySku = $productIdBySku;
         $this->_lastorders = $lastorders;
       
+        $this->_csv_helper = $csv;
+      
 
     }
   
   
-    /**
+  /**
   *
   */
   public function importQty($inventoryArray = array()) {
@@ -93,9 +98,17 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
     
     $stockUpdateArray = []; 
     
+    $stockUpdateflatArray = [];
+    
+    $backupOfPerviousArray = [];
+    
     foreach ($sourceItems as $sourceItem) { 
       
       $sku = $sourceItem->getSku();
+      $qty = $sourceItem->getQuantity();
+      
+      $backupOfPerviousArray[] = array('sku'=>$sku,'qty'=>$qty); 
+      
       
       if(isset($sku_to_exclude_array[$sku]))
           continue;
@@ -108,6 +121,14 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
                 
          //Only if change in QTY 
          if((int)$current_qty != (int)$update_qty) {
+           
+           $stockUpdateflatArray[] = [
+            'sku'=>$sku,
+            'qty'=> $update_qty,
+             'is_in_stock'=> $is_in_stock,
+             'website_id' => 0,
+             'stock_id' => 1,
+            ];
           
            $stockUpdateArray[$sku] = [
             'qty'=> $update_qty,
@@ -123,9 +144,16 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
       
     }
     
+    //CSV FOR Products Updated
+    if($stockUpdateflatArray)
+      $this->_csv_helper->writeToCsvWithName($stockUpdateflatArray,"list_products_updated");
+    
+    if($backupOfPerviousArray)
+      $this->_csv_helper->writeToCsvWithName($backupOfPerviousArray,"backup_of_stock");
+     
+    
     $stockUpdateArray = $this->addProductId($stockUpdateArray);
     
-    //
     return $stockUpdateArray;
 
   }
@@ -182,7 +210,24 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
     
   }
   
+/**
+  *
+  */
+  public function getSkuAmountUploaded() {
+    
+    return 0;
+    
+  }
+  
 
+/**
+  *
+  */
+  public function getSkuAmountExcluded() {
+    
+    return 0;
+    
+  }
   
 
   

@@ -262,5 +262,54 @@ class RmsDownload extends \Magento\Framework\Api\AbstractExtensibleObject implem
     {
         return $this->setData(self::DOWNLOAD_TYPE, $downloadType);
     }
+  
+  
+  
+    /**
+    * Get sku_added
+    * @return string|null
+    */
+    public function getSkuAdded() 
+    {
+      
+      return $this->_get(self::SKU_ADDED);
+      
+    }
+  
+   /**
+   * Set sku_added
+   * @param string $skuAdded
+   * @return \Neon\Rms\Api\Data\RmsDownloadInterface
+   */
+   public function setSkuAdded($skuAdded)
+   {
+      return $this->setData(self::SKU_ADDED,$skuAdded); 
+   }
+  
+  
+  /**
+  * Get sku_excluded
+  * @return string|null
+  */
+  public function getSkuExcluded()
+  {
+    return $this->_get(self::SKU_EXCLUDED);  
+  }
+  
+  
+  /**
+  * Set sku_excluded
+  * @param string $skuExcluded
+  * @return \Neon\Rms\Api\Data\RmsDownloadInterface
+  */
+  public function setSkuExcluded($skuExcluded)
+  {
+     return $this->setData(self::SKU_EXCLUDED,$skuExcluded); 
+  }
+  
+  
+  
+  
+  
 }
 

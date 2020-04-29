@@ -34,8 +34,8 @@ class SendCreditMemo
     {
        #$this->logger->addInfo("Cronjob SendCreditMemo is executed.");
       
-      $this->_packageCreditMemo->getOrdersToSend()
-      ->sendOrderItems();
+      $this->_packageCreditMemo->getCreditMemoToSend()
+      ->sendCreditMemo();
       
     }
 }
