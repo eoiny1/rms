@@ -5,7 +5,7 @@ namespace Neon\Rms\Model\ResourceModel\RmsSend\Grid;
 
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Search\AggregationInterface;
-use Neon\Rmstest\Model\ResourceModel\RmsSend\Collection as RmsSendCollection;
+use Neon\Rms\Model\ResourceModel\RmsSend\Collection as RmsSendCollection;
 
 /**
  * Class Collection

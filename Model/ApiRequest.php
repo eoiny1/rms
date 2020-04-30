@@ -49,7 +49,7 @@ class ApiRequest extends \Magento\Framework\Model\AbstractModel {
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      */
-    protected function __construct(
+    public function __construct(
       \Neon\Rms\Helper\Config $config,
       \Neon\Rms\Helper\Curl $curl, 
        \Magento\Framework\Model\Context $context,
