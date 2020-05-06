@@ -25,6 +25,8 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
   
     protected $_csv_helper;
   
+    protected $_getSalableQuantityDataBySku;
+  
     protected $_sku_amount_uploaded = 0;
   
     protected $_sku_amount_excluded = 0;
@@ -44,7 +46,8 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
       \Magento\CatalogImportExport\Model\StockItemImporterInterface $importer,
       \Magento\InventoryCatalogApi\Model\GetProductIdsBySkusInterface $productIdBySku,
       \Neon\Rms\Model\UpdateInventory\LastOrders $lastorders,
-      \Neon\Rms\Helper\Csv $csv
+      \Neon\Rms\Helper\Csv $csv,
+      \Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku $getSalableQuantityDataBySku
     ) {
        
         parent::__construct($context, $registry);
@@ -55,6 +58,7 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
         $this->_importer = $importer;
         $this->_productIdBySku = $productIdBySku;
         $this->_lastorders = $lastorders;
+        $this->_getSalableQuantityDataBySku = $getSalableQuantityDataBySku;
       
         $this->_csv_helper = $csv;
       
