@@ -49,12 +49,10 @@ class LastOrders extends \Magento\Framework\Model\AbstractModel {
   
   
   public function getSkuToExclude() {
-    
+
     return $this->getLastOrderItems(); 
     
   }
-  
-  
   
 
   
@@ -124,21 +122,7 @@ class LastOrders extends \Magento\Framework\Model\AbstractModel {
   
  
   
-  
-  
 
-  
-  
-
-  
-  
-
-  
-
-  
-  
-  
-  
   
   
 }

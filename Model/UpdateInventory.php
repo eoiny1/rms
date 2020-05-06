@@ -104,6 +104,7 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
     $sourceItems = $this->getAllSourceItems();
     
     $sku_to_exclude_array = $this->getSkusToExclude();
+    
     $this->setSkuAmountExcluded(count($sku_to_exclude_array));
     
     $stockUpdateArray = []; 
@@ -119,22 +120,25 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
       
       $backupOfPerviousArray[] = array('sku'=>$sku,'qty'=>$qty); 
       
-      
-      if(isset($sku_to_exclude_array[$sku]))
-          continue;
-      
+
       if(isset($inventoryArray[$sku])) {
         
         $current_qty = $sourceItem->getQuantity();
         $salable_qty = $this->getSaleAbleQty($sku);
         $update_qty = $inventoryArray[$sku]["qty"];
         $is_in_stock = ($update_qty > 0)?1:0;
-        
                 
          //Only if change in QTY 
          if((int)$current_qty != (int)$update_qty) {
           
             if((int)$salable_qty != (int)$update_qty) {
+              
+              //Make Sure Items QTY Just Ordered Are Not Overwritten  
+              if(isset($sku_to_exclude_array[$sku])) {
+                  if($update_qty > $salable_qty)
+                      continue;
+                }
+          
 
                  $stockUpdateflatArray[] = [
                   'sku'=>$sku,
