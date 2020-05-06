@@ -126,27 +126,35 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
       if(isset($inventoryArray[$sku])) {
         
         $current_qty = $sourceItem->getQuantity();
+        $salable_qty = $this->getSaleAbleQty($sku);
         $update_qty = $inventoryArray[$sku]["qty"];
         $is_in_stock = ($update_qty > 0)?1:0;
+        
                 
          //Only if change in QTY 
          if((int)$current_qty != (int)$update_qty) {
-           
-           $stockUpdateflatArray[] = [
-            'sku'=>$sku,
-            'qty'=> $update_qty,
-             'is_in_stock'=> $is_in_stock,
-             'website_id' => 0,
-             'stock_id' => 1,
-            ];
           
-           $stockUpdateArray[$sku] = [
-            'qty'=> $update_qty,
-             'is_in_stock'=> $is_in_stock,
-             'product_id' => "",
-             'website_id' => 0,
-             'stock_id' => 1,
-            ];
+            if((int)$salable_qty != (int)$update_qty) {
+
+                 $stockUpdateflatArray[] = [
+                  'sku'=>$sku,
+                  'qty'=> $update_qty,
+                   'is_in_stock'=> $is_in_stock,
+                   'website_id' => 0,
+                   'stock_id' => 1,
+                   'current_qty'=> $current_qty,
+                   'salable_qty' => $salable_qty
+                  ];
+
+                 $stockUpdateArray[$sku] = [
+                  'qty'=> $update_qty,
+                   'is_in_stock'=> $is_in_stock,
+                   'product_id' => "",
+                   'website_id' => 0,
+                   'stock_id' => 1,
+                  ];
+            
+            }
 
          }
 
@@ -209,6 +217,26 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
      return $sourceItems;
    
     
+  }
+  
+  /**
+  *
+  */
+  protected function getSaleAbleQty($sku) {
+
+    $qty = null;  
+    
+    try{
+    
+      $data = $this->_getSalableQuantityDataBySku->execute($sku);
+      $qty =  $data[0]["qty"];
+    
+    } catch (Exception $e) {
+        #echo $e->getMessage();
+    }
+    
+     return $qty;
+      
   }
   
   
