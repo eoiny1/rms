@@ -35,6 +35,12 @@ class Config extends AbstractHelper
   const POST_URL = "rms/api_settings/post_url";
   const PEEK_URL = "rms/api_settings/peek_url";
   
+  const FTP_SERVER = "rms/ftp_settings/ftp_server";
+  const FTP_USERNAME = "rms/ftp_settings/ftp_user_name";
+  const FTP_PWD = "rms/ftp_settings/ftp_pwd";
+  const FTP_STORE_CODE = "rms/ftp_settings/store_code";
+ 
+  
   const LAST_ORDER_LIMIT = "rms/download_settings/last_order_limit";
   
   
@@ -240,6 +246,87 @@ class Config extends AbstractHelper
         );
 
     }
+  
+  
+  
+    /**
+    *
+    */
+    public function getFtpServer($storeId = null) {
+      
+       return $this->scopeConfig->getValue(
+            self::FTP_SERVER,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+    }
+  
+  
+    /**
+    *
+    */
+    public function getFtpUserName($storeId = null) {
+      
+       return $this->scopeConfig->getValue(
+            self::FTP_USERNAME,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+    }
+  
+  
+    /**
+    *
+    */
+    public function getFtpPwd($storeId = null) {
+      
+      
+       return $this->encryptor->decrypt($this->scopeConfig->getValue(
+            self::FTP_PWD,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        ));
+      
+      
+
+    }
+  
+    /*
+      public function getAccessIdentifier($storeId = null) {
+      
+       return $this->encryptor->decrypt($this->scopeConfig->getValue(
+            self::ACCESS_IDENTIFIER,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        ));
+
+    }*/
+  
+  
+    /**
+    *
+    */
+    public function getFtpStoreCode($storeId = null) {
+      
+       return $this->scopeConfig->getValue(
+            self::FTP_STORE_CODE,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+    }
+
+
+  
+  
+
+  
+  
+  
+  
+  
   
   
   /**

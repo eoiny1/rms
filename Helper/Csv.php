@@ -62,6 +62,27 @@ class Csv extends AbstractHelper
    }
   
   
+  /**
+  *
+  **/
+  public function readCsv($file) {
+    
+    $csvData =  $this->csvProcessor->getData($file);
+    
+    $header = array_shift($csvData);
+    
+    $csv_array = array();
+    
+     foreach($csvData as $data) {
+        $temp = array_combine($header,$data);
+        $csv_array[] = $temp;
+      }
+    
+    
+    return $csv_array;
+    
+  }
+  
   
   
   /**
