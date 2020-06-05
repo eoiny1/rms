@@ -32,6 +32,10 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
   
     protected $_csv_helper;
   
+    protected $_updateInventory;
+ 
+   protected $_file_helper;
+  
 
      /**
      * @param \Neon\Rms\Helper\Config $config
@@ -41,6 +45,8 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
     public function __construct(
       \Neon\Rms\Helper\Config $config,
       \Neon\Rms\Helper\Csv $csv,
+      \Neon\Rms\Helper\File $file,
+      \Neon\Rms\Model\UpdateInventory $updateInventory,
        \Magento\Framework\Model\Context $context,
        \Magento\Framework\Registry $registry
     ) {
@@ -52,7 +58,10 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
 		    $this->_ftp_user_pass = $config->getFtpPwd();
         $this->_ftp_store_code = $config->getFtpStoreCode();
       
-      $this->_csv_helper = $csv;
+        $this->_csv_helper = $csv;
+        $this->_updateInventory = $updateInventory;
+      
+        $this->_file_helper = $file;
        
         parent::__construct($context, $registry);
 
@@ -98,6 +107,65 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
     
   }
   
+  /**
+  *
+  **/
+  public function createInventoryArray() {
+    
+     $raw_array  = $this->_csv_helper->readCsv($this->getDownloadedCsv());
+    
+   
+     if(!empty($raw_array)) {
+       
+       $inventoryUpdateArray = array();
+       
+       foreach($raw_array as $data) {
+         
+           $inventoryUpdateArray[$data["sku"]] = array(
+              "sku"=>$data["sku"],
+              "qty"=>$data["qty"],
+              "price"=>$data["product_price"],
+              "cost"=>$data["product_cost"]
+            );
+         
+       }
+       
+       
+        #print_r($inventoryUpdateArray);
+       
+       
+       $this->setInventoryUpdateArray($inventoryUpdateArray);
+      
+       
+     }
+     
+      
+    return $this;
+    
+  } 
+  
+  
+  /**
+  *
+  **/
+  public function updateInventory() {
+    
+    $inventoryArray = $this->getInventoryUpdateArray();
+    
+    if($inventoryArray) {
+      
+       echo "\n\n gotten this far \n\n";
+      
+       $this->_updateInventory->importQty($inventoryArray);
+      
+      #print_r($this->_updateInventory->getSkuAmountUploaded());
+      
+    }
+    
+    
+  }
+  
+  
   
   /**
   *
@@ -137,9 +205,10 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
   **/
   protected function getLocalFileName() {
     
+    $downloadDir = $this->_file_helper->getCsvBaseDir();
     $storecode = $this->_ftp_store_code;
     $time = date('m-d-Y-His');
-    $local_file =  $storecode."_".$time.".csv"; 
+    $local_file =  $downloadDir.$storecode."_".$time.".csv"; 
     
     return  $local_file;
     
@@ -162,42 +231,13 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
   
   
   
-  /**
-  *
-  **/
-  public function createInventoryArray() {
-    
-     $raw_array  = $this->_csv_helper->readCsv($this->getDownloadedCsv());
-      
-     if(!empty($raw_array)) {
-       
-       $inventoryUpdateArray = array();
-       
-       foreach($raw_array as $data) {
-         
-           $inventoryUpdateArray[$data["sku"]] = array(
-              "sku"=>$data["qty"],
-              "qty"=>$data["mhsws_uid"],
-              "price"=>$data["product_price"],
-              "cost"=>$data["product_cost"]
-            );
-         
-       }
-       
-       
-       $this->setInventoryUpdateArray($inventoryUpdateArray);
-       
-     }
-     
-    return $this;
-    
-  } 
+  
   
   
   /**
   *
   **/
-  protected function getInventoryUpdateArray() {
+  public function getInventoryUpdateArray() {
     
     return  $this->_inventoryUpdateArray;
   }
@@ -211,10 +251,6 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
    
  }
    
-  
-  
-  
-
   
   /**
   *
@@ -233,6 +269,11 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
      return $this->_downloadedCsv;
     
   }
+  
+  
+  
+  
+  
   
   
   

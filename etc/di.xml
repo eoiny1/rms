@@ -68,6 +68,7 @@
 		<arguments>
 			<argument name="commands" xsi:type="array">
 				<item name="DownloadRms" xsi:type="object">Neon\Rms\Console\Command\DownloadRms</item>
+        <item name="DownloadFtp" xsi:type="object">Neon\Rms\Console\Command\DownloadFtp</item>
 			</argument>
 		</arguments>
 	</type>
