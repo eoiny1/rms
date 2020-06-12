@@ -34,7 +34,13 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
   
     protected $_updateInventory;
  
-   protected $_file_helper;
+    protected $_file_helper;
+  
+    protected $_timer;
+  
+    protected $_rmsDownloadRepositoryInterface;
+  
+    protected $_rmsDownloadInterface;
   
 
      /**
@@ -48,7 +54,10 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
       \Neon\Rms\Helper\File $file,
       \Neon\Rms\Model\UpdateInventory $updateInventory,
        \Magento\Framework\Model\Context $context,
-       \Magento\Framework\Registry $registry
+       \Magento\Framework\Registry $registry,
+        \Neon\Rms\Helper\Timer $timer,
+        \Neon\Rms\Api\RmsDownloadRepositoryInterface $rmsDownloadRepositoryInterface,
+        \Neon\Rms\Api\Data\RmsDownloadInterface $rmsDownloadInterface
     ) {
       
         $this->config = $config;
@@ -57,6 +66,13 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
 		    $this->_ftp_user_name = $config->getFtpUserName();  
 		    $this->_ftp_user_pass = $config->getFtpPwd();
         $this->_ftp_store_code = $config->getFtpStoreCode();
+      
+        $this->_rmsDownloadInterface = $rmsDownloadInterface;
+      
+        $this->_rmsDownloadRepositoryInterface = $rmsDownloadRepositoryInterface;
+      
+        $this->_timer = $timer;
+        $this->_timer->start();
       
         $this->_csv_helper = $csv;
         $this->_updateInventory = $updateInventory;
@@ -73,6 +89,9 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
   *
   **/
   public function getLatestFile() {
+    
+    //Clear everything in foler before download
+    $this->_file_helper->moveMassFilesToArchive();
     
     if($this->conntectedToServer()) {
       
@@ -91,6 +110,10 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
 
             $new_server_file = $this->getNewServerFileName();
             #ftp_rename($this->_conn_id,$server_file,$new_server_file);
+            
+            $this->_rmsDownloadInterface->setSuccess("1");
+            
+            $this->_rmsDownloadInterface->setCsvName(basename($local_file));
 
             $this->setDownloadedCsv($local_file);
 
@@ -158,12 +181,38 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
       
        $this->_updateInventory->importQty($inventoryArray);
       
+          $this->_rmsDownloadInterface->setSkuAdded($this->_updateInventory->getSkuAmountUploaded());
+       
+    $this->_rmsDownloadInterface->setSkuExcluded($this->_updateInventory->getSkuAmountExcluded());
+      
+      $this->registerDownload();
+      
       #print_r($this->_updateInventory->getSkuAmountUploaded());
       
     }
     
     
   }
+  
+  
+  /**
+  *
+  */
+  protected function registerDownload() {
+    
+    $this->_timer->stop();
+    
+    $this->_rmsDownloadInterface->setStatus(1);
+    
+    $this->_rmsDownloadInterface->setDownloadType(2);
+    
+    $this->_rmsDownloadInterface->setDownloadTime($this->_timer->getElapsedTime());
+     
+    $this->_rmsDownloadRepositoryInterface->save($this->_rmsDownloadInterface);
+    
+    
+  }
+  
   
   
   

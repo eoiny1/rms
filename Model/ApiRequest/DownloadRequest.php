@@ -10,8 +10,6 @@ namespace Neon\Rms\Model\ApiRequest;
  */
 class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
   
-
-  
   
     protected $_request = "ProductMetadataFetch";
   
@@ -119,6 +117,9 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
   public function downloadGz() {
     
      if($this->_asseturl !='') {
+       
+        //Clear everything in foler before download
+        $this->_file_helper->moveMassFilesToArchive();
       
         $date = date('mdY_His');
 		    $downloadDir = $this->_file_helper->getCsvBaseDir();

@@ -87,8 +87,32 @@
       
       
       
+      <group id="rms_send" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label">
+				
+        <label>RMS Send Settings</label>
+        
+        <field id="enable_order_send" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enable Order Send</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+				</field>
+        
+        <field id="enable_credit_send" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+					<label>Enable Credit Memo Send</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+				</field>
+       
+        
+      </group>
       
-      <group id="download_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
+      
+      
+      
+      
+      
+      
+      <group id="download_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label">
         <label>Download Settings</label>
          <field id="last_order_limit" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
 					  <label>Last Order Limit Time</label>
