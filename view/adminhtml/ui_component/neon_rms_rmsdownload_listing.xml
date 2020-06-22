@@ -42,18 +42,28 @@
 		<paging name="listing_paging"/>
 	</listingToolbar>
 	<columns name="neon_rms_rmsdownload_columns">
-		<selectionsColumn name="ids">
-			<settings>
-				<indexField>rmsdownload_id</indexField>
-			</settings>
-		</selectionsColumn>
+    
+    
+    <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
+                    <item name="indexField" xsi:type="string">rmsdownload_id</item>
+                </item>
+            </argument>
+     </selectionsColumn>
 		<column name="rmsdownload_id">
-			<settings>
-				<filter>text</filter>
-				<sorting>asc</sorting>
-				<label translate="true">ID</label>
-			</settings>
+		            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">desc</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                </item>
+            </argument>
 		</column>
+    
+    
 		<column name="created_at">
 			<settings>
 				<filter>text</filter>
