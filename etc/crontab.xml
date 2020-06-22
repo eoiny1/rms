@@ -7,5 +7,8 @@
 		<job instance="Neon\Rms\Cron\SendCreditMemo" method="execute" name="neon_rms_sendcreditmemo">
 			<schedule>*/1 * * * *</schedule>
 		</job>
+    <job instance="Neon\Rms\Cron\FtpDownload" method="execute" name="neon_rms_ftpdownload">
+			<schedule>*/30 * * * *</schedule>
+		</job>
 	</group>
 </config>

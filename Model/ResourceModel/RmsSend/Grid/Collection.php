@@ -78,15 +78,22 @@ protected function _initSelect()
         $this->getSelect()->joinLeft(
                 ['rmssendorder' => $this->getTable('neon_rms_rmssendorder')],
                 'main_table.rmssend_id = rmssendorder.rms_send_id AND main_table.sent_type = 1',
-               ['rmssendorder.order_increment as order_id']
+               ['rmssendorder.order_increment as order_id','rmssendorder.sent_sku as order_sku']
             );
   
         
       $this->getSelect()->joinLeft(
                 ['rmssendcr' => $this->getTable('neon_rms_rmssendcr')],
                 'main_table.rmssend_id = rmssendcr.rms_send_id AND main_table.sent_type = 2',
-                ['rmssendcr.cr_increment as cr_id']
+                ['rmssendcr.cr_increment as cr_id','rmssendcr.sent_sku as cr_sku']
             );
+  
+  #asc 
+  
+    $this->getSelect()->order('main_table.rmssend_id desc');
+  
+  
+  return $this;
   
   
 }
