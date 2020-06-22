@@ -10,6 +10,8 @@ class SendCreditMemo
     protected $logger;
   
     protected $_packageCreditMemo;
+  
+    protected $_config;  
 
     /**
      * Constructor
@@ -18,11 +20,13 @@ class SendCreditMemo
      */
     public function __construct(
       \Psr\Log\LoggerInterface $logger,
-       \Neon\Rms\Model\Package\PackageCreditMemo $packageCreditMemo
+       \Neon\Rms\Model\Package\PackageCreditMemo $packageCreditMemo,
+       \Neon\Rms\Helper\Config $config
       )
     {
         $this->logger = $logger;
         $this->_packageCreditMemo = $packageCreditMemo;
+        $this->_config = $config;
     }
 
     /**
@@ -34,8 +38,10 @@ class SendCreditMemo
     {
        #$this->logger->addInfo("Cronjob SendCreditMemo is executed.");
       
-      $this->_packageCreditMemo->getCreditMemoToSend()
-      ->sendCreditMemo();
+      if($this->_config->isRmsSendCredit()) {
+        $this->_packageCreditMemo->getCreditMemoToSend()
+        ->sendCreditMemo();
+      }
       
     }
 }

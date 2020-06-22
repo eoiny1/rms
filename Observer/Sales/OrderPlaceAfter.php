@@ -22,15 +22,20 @@ class OrderPlaceAfter implements \Magento\Framework\Event\ObserverInterface
   
   
   protected $registerOrder;
+  
+  
+  protected $_config; 
 
   
    public function __construct(
      \Neon\Rms\Model\Register\RegisterOrder $registerOrder,
-      PsrLoggerInterface $logger
+      PsrLoggerInterface $logger,
+      \Neon\Rms\Helper\Config $config
     ) {
      
         $this->registerOrder = $registerOrder;
         $this->logger = $logger;
+        $this->_config = $config;
      
     }
 
@@ -46,21 +51,25 @@ class OrderPlaceAfter implements \Magento\Framework\Event\ObserverInterface
     public function execute(
         \Magento\Framework\Event\Observer $observer
     ) {
+      
+        if($this->_config->isRmsSendOrder()) {
         
-        $order = $observer->getEvent()->getOrder();
-      
-        #$this->logger->info("order_info",$order->getData());
-      
-        $item_data = $this->packageOrderDetails($order);
-      
-        #$this->logger->info("item_data",$item_data);
-      
-        foreach($item_data as $item) {
-          
-          $rms_send_id = $this->registerOrder->saveItem(1);
-          $this->registerOrder->saveOrderItem($rms_send_id,$item);
-          
-       }
+          $order = $observer->getEvent()->getOrder();
+
+          #$this->logger->info("order_info",$order->getData());
+
+          $item_data = $this->packageOrderDetails($order);
+
+          #$this->logger->info("item_data",$item_data);
+
+          foreach($item_data as $item) {
+
+            $rms_send_id = $this->registerOrder->saveItem(1);
+            $this->registerOrder->saveOrderItem($rms_send_id,$item);
+
+          }
+        
+        }
       
       
     }

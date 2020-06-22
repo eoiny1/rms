@@ -39,7 +39,11 @@ class Config extends AbstractHelper
   const FTP_USERNAME = "rms/ftp_settings/ftp_user_name";
   const FTP_PWD = "rms/ftp_settings/ftp_pwd";
   const FTP_STORE_CODE = "rms/ftp_settings/store_code";
- 
+  const FTP_CRON_ENABLE = "rms/ftp_settings/enable_cron";
+  
+  
+  const RMS_ENABLE_ORDER_SEND = "rms/rms_send/enable_order_send";
+  const RMS_ENABLE_CREDIT_SEND = "rms/rms_send/enable_credit_send";
   
   const LAST_ORDER_LIMIT = "rms/download_settings/last_order_limit";
   
@@ -317,17 +321,54 @@ class Config extends AbstractHelper
         );
 
     }
+  
+  
+    /**
+    *
+    */
+    public function getEnableFtpCron($storeId = null) {
+      
+       return $this->scopeConfig->getValue(
+            self::FTP_CRON_ENABLE,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+      
+      
+    }
 
 
   
   
+  
+   /**
+    *
+   */
+    public function isRmsSendOrder($storeId = null) {
+      
+       return $this->scopeConfig->getValue(
+            self::RMS_ENABLE_ORDER_SEND,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
 
+    }
   
   
+   /**
+    *
+   */
+    public function isRmsSendCredit($storeId = null) {
+      
+       return $this->scopeConfig->getValue(
+            self::RMS_ENABLE_CREDIT_SEND,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+    }
   
-  
-  
-  
+
   
   /**
   *

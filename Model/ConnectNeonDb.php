@@ -109,7 +109,7 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
             chmod($local_file, 0777); 
 
             $new_server_file = $this->getNewServerFileName();
-            #ftp_rename($this->_conn_id,$server_file,$new_server_file);
+            ftp_rename($this->_conn_id,$server_file,$new_server_file);
             
             $this->_rmsDownloadInterface->setSuccess("1");
             
@@ -177,15 +177,15 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
     
     if($inventoryArray) {
       
-       echo "\n\n gotten this far \n\n";
+          echo "\n\n gotten this far \n\n";
       
-       $this->_updateInventory->importQty($inventoryArray);
+          $this->_updateInventory->importQty($inventoryArray);
       
           $this->_rmsDownloadInterface->setSkuAdded($this->_updateInventory->getSkuAmountUploaded());
        
-    $this->_rmsDownloadInterface->setSkuExcluded($this->_updateInventory->getSkuAmountExcluded());
+         $this->_rmsDownloadInterface->setSkuExcluded($this->_updateInventory->getSkuAmountExcluded());
       
-      $this->registerDownload();
+         $this->registerDownload();
       
       #print_r($this->_updateInventory->getSkuAmountUploaded());
       
@@ -244,7 +244,7 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
   public function getLatestFileName() {
     
      $storecode = $this->_ftp_store_code;
-		 return "out"."/".$storecode."/".$storecode."_test.csv";
+		 return "out"."/".$storecode."/".$storecode.".csv";
     
   }
   
@@ -274,7 +274,7 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
 
 		$storecode = $this->_ftp_store_code;
 
-		return "out"."/".$storecode."/".$storecode."-".$time."-test-downloaded.csv";
+		return "out"."/".$storecode."/".$storecode."-".$time."-downloaded.csv";
 
 	}
   

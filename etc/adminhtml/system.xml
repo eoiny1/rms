@@ -83,6 +83,13 @@
           <label>Store Code</label>
         </field>
         
+       <field id="enable_cron" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="select">
+					<label>Enable Cron For FTP</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+				</field>
+        
+        
       </group>
       
       

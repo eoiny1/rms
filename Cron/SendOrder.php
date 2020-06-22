@@ -9,8 +9,11 @@ class SendOrder
 
     protected $logger;
 
-   protected $_packageOrder;
+    protected $_packageOrder;
 
+    protected $_config;  
+  
+  
     /**
      * Constructor
      *
@@ -18,11 +21,13 @@ class SendOrder
      */
     public function __construct(
       \Psr\Log\LoggerInterface $logger,
-       \Neon\Rms\Model\Package\PackageOrder $packageOrder
+       \Neon\Rms\Model\Package\PackageOrder $packageOrder,
+      \Neon\Rms\Helper\Config $config
       )
     {
         $this->logger = $logger;
         $this->_packageOrder = $packageOrder;
+        $this->_config = $config;
     }
 
     /**
@@ -34,8 +39,10 @@ class SendOrder
     {
        #$this->logger->addInfo("Cronjob SendOrder is executed.");
       
-      $this->_packageOrder->getOrdersToSend()
-      ->sendOrderItems();
+      if($this->_config->isRmsSendOrder()) {
+        $this->_packageOrder->getOrdersToSend()
+        ->sendOrderItems();
+      }
       
     }
 }

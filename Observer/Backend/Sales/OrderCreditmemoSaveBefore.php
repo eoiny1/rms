@@ -22,15 +22,21 @@ class OrderCreditmemoSaveBefore implements \Magento\Framework\Event\ObserverInte
   
   protected $registerCreditMemo;
   
+  
+  protected $_config; 
+  
 
    public function __construct(
      \Neon\Rms\Model\Register\RegisterCrMemo $registerCr,
-      PsrLoggerInterface $logger
+      PsrLoggerInterface $logger,
+     \Neon\Rms\Helper\Config $config
     ) {
      
         $this->registerCreditMemo = $registerCr;
      
         $this->logger = $logger;
+     
+        $this->_config = $config;
     }
   
 
@@ -43,22 +49,25 @@ class OrderCreditmemoSaveBefore implements \Magento\Framework\Event\ObserverInte
     public function execute(
         \Magento\Framework\Event\Observer $observer
     ) {
+      
+          if($this->_config->isRmsSendCredit()) {
                  
-          $creditMemo = $observer->getEvent()->getCreditmemo();
-      
-          $item_data = $this->packageCrMemoDetails($creditMemo);
-       
-          #$this->logger->info("item_data",$item_data);
-      
-          foreach($item_data as $item) {
-          
-            $rms_send_id = $this->registerCreditMemo->saveItem(2);
-            $this->logger->info("send_id",array($rms_send_id));
-            $this->registerCreditMemo->saveCrItem($rms_send_id,$item);
-          
+              $creditMemo = $observer->getEvent()->getCreditmemo();
+
+              $item_data = $this->packageCrMemoDetails($creditMemo);
+
+              #$this->logger->info("item_data",$item_data);
+
+              foreach($item_data as $item) {
+
+                $rms_send_id = $this->registerCreditMemo->saveItem(2);
+                $this->logger->info("send_id",array($rms_send_id));
+                $this->registerCreditMemo->saveCrItem($rms_send_id,$item);
+
+              }
+            
           }
-      
-        #https://github.com/belchiorneto/mercadopagoMagento/blob/754394f6d1e33e090e6df439c396f709253390f4/Observer/RefundObserverBeforeSave.php
+           #https://github.com/belchiorneto/mercadopagoMagento/blob/754394f6d1e33e090e6df439c396f709253390f4/Observer/RefundObserverBeforeSave.php
 
     }
   
