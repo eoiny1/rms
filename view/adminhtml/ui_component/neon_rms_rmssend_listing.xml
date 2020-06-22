@@ -33,17 +33,24 @@
 		<paging name="listing_paging"/>
 	</listingToolbar>
 	<columns name="neon_rms_rmssend_columns">
-		<selectionsColumn name="ids">
-			<settings>
-				<indexField>rmssend_id</indexField>
-			</settings>
-		</selectionsColumn>
+
+     <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
+                    <item name="indexField" xsi:type="string">rmssend_id</item>
+                </item>
+            </argument>
+     </selectionsColumn>
 		<column name="rmssend_id">
-			<settings>
-				<filter>text</filter>
-				<sorting>asc</sorting>
-				<label translate="true">ID</label>
-			</settings>
+		            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">desc</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                </item>
+            </argument>
 		</column>
          
     <column name="sent_type">
@@ -94,6 +101,20 @@
 			</settings>
 		</column>
     
+     <column name="order_sku">
+			    <settings>
+				<filter>text</filter>
+				<label translate="true">Order SKU</label>
+			</settings>
+		</column>
+    
+    
+     <column name="cr_sku">
+			    <settings>
+				<filter>text</filter>
+				<label translate="true">Credit Memo SKU</label>
+			</settings>
+		</column>
     
     
 	</columns>
