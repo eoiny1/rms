@@ -31,6 +31,22 @@
 		<columnsControls name="columns_controls"/>
 		<filters name="listing_filters"/>
 		<paging name="listing_paging"/>
+    
+     <massaction name="listing_massaction">
+        <action name="delete">
+            <settings>
+                <confirm>
+                    <message translate="true">Are you sure to delete selected items?</message>
+                    <title translate="true">Delete items</title>
+                </confirm>
+                <url path="neon_rms/rmssend/massDelete"/>
+                <type>delete</type>
+                <label translate="true">Delete</label>
+            </settings>
+        </action>
+    </massaction>
+    
+    
 	</listingToolbar>
 	<columns name="neon_rms_rmssend_columns">
 
