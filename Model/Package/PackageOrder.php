@@ -149,7 +149,10 @@ class PackageOrder extends \Magento\Framework\Model\AbstractModel {
   $rms_send_id = $orderItem->getRmsSendId();
   $order_increment = $orderItem->getOrderIncrement();
   $order_item_id = $orderItem->getOrderItemId();
-  $notes =  $order_increment.$sku.$order_item_id.$rms_send_id;
+  
+  $short_increment = substr($order_increment, 3); 
+   
+  $notes =  $short_increment.$sku.$order_item_id.$rms_send_id;
   
   $this->_productInventoryUpdateRequest->addExtraPayload(array(
    "payload"=>

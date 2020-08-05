@@ -167,7 +167,9 @@ class PackageCreditMemo extends \Magento\Framework\Model\AbstractModel {
    
   $status = ($sent_status_type==1)?"cancelonhold":"sold";
    
-  $notes =  $cr_increment.$sku.$sent_status_type.$cr_item_id.$rms_send_id;
+  $short_increment = substr($cr_increment, 3); 
+   
+  $notes =  $short_increment.$sku.$sent_status_type.$cr_item_id.$rms_send_id;
 
   $this->_productInventoryUpdateRequest->addExtraPayload(array(
    "payload"=>
