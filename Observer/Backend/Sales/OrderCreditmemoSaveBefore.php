@@ -67,7 +67,8 @@ class OrderCreditmemoSaveBefore implements \Magento\Framework\Event\ObserverInte
               }
             
           }
-           #https://github.com/belchiorneto/mercadopagoMagento/blob/754394f6d1e33e090e6df439c396f709253390f4/Observer/RefundObserverBeforeSave.php
+         
+        #https://github.com/belchiorneto/mercadopagoMagento/blob/754394f6d1e33e090e6df439c396f709253390f4/Observer/RefundObserverBeforeSave.php
 
     }
   
@@ -90,15 +91,20 @@ class OrderCreditmemoSaveBefore implements \Magento\Framework\Event\ObserverInte
        
             #$this->logger->info("all_item_types",$item->getData());
        
-            $sku = $item->getSku();
+            //Only return if back to stock is checked
+            if($item->getBackToStock()) {
+       
+                $sku = $item->getSku();
 
-            $item_data[$sku]['cr_id'] = $crMemoId;
-            $item_data[$sku]['cr_increment'] = $crMemoNumber;  
-            $item_data[$sku]['cr_item_id'] = $item->getOrderItemId();
-            $item_data[$sku]['order_id'] =  $orderId;
-            $item_data[$sku]['product_id'] = $item->getProductId(); //for product Id
-            $item_data[$sku]['sku'] = $item->getSku();
-            $item_data[$sku]['qty'] = $item->getQty();
+                $item_data[$sku]['cr_id'] = $crMemoId;
+                $item_data[$sku]['cr_increment'] = $crMemoNumber;  
+                $item_data[$sku]['cr_item_id'] = $item->getOrderItemId();
+                $item_data[$sku]['order_id'] =  $orderId;
+                $item_data[$sku]['product_id'] = $item->getProductId(); //for product Id
+                $item_data[$sku]['sku'] = $item->getSku();
+                $item_data[$sku]['qty'] = $item->getQty();
+              
+            }
           
         }
 
