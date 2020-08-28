@@ -12,7 +12,6 @@
                 <item name="url" xsi:type="string">*/*/download</item>
             </item>
         </item>
-    
 	</argument>
 	<settings>
 		<spinner>neon_rms_rmsdownload_columns</spinner>
@@ -42,8 +41,6 @@
 		<paging name="listing_paging"/>
 	</listingToolbar>
 	<columns name="neon_rms_rmsdownload_columns">
-    
-    
     <selectionsColumn name="ids">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -62,8 +59,6 @@
                 </item>
             </argument>
 		</column>
-    
-    
 		<column name="created_at">
 			<settings>
 				<filter>text</filter>
@@ -88,5 +83,14 @@
 				<label translate="true">download_time</label>
 			</settings>
 		</column>
+    
+    <actionsColumn name="actions" class="Neon\Rms\Ui\Component\Listing\Column\CheckRequestActions" sortOrder="100">
+      <settings>
+         <indexField>rmsdownload_id</indexField>
+         <resizeEnabled>false</resizeEnabled>
+         <resizeDefaultWidth>107</resizeDefaultWidth>
+      </settings>
+    </actionsColumn>
+    
 	</columns>
 </listing>
