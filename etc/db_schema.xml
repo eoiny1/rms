@@ -75,6 +75,7 @@
 		<column name="download_type" nullable="true" xsi:type="smallint"/>
     <column identity="false" name="sku_added" nullable="true" xsi:type="int"/>
     <column identity="false" name="sku_excluded" nullable="true" xsi:type="int"/>
+    <column name="rms_interaction" nullable="true" xsi:type="varchar"/>
 	</table>
   
 </schema>
