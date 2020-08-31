@@ -72,6 +72,8 @@ class CheckRequest extends \Magento\Backend\App\Action
          $download_request  = $this->_rmsDownloadRepository->get($id);
           
          print_r($download_request->getSkuAdded());
+      
+        
            
          #$faq = $this->faqsRepository->getById($id);
 
