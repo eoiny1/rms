@@ -25,6 +25,7 @@ interface RmsDownloadInterface extends \Magento\Framework\Api\ExtensibleDataInte
     const GZ_URL = 'gz_url';
     const SKU_ADDED = 'sku_added';
     const SKU_EXCLUDED = 'sku_excluded';
+    const RMS_INTERACTION = 'rms_interaction';
 
     /**
      * Get rmsdownload_id
@@ -93,7 +94,8 @@ interface RmsDownloadInterface extends \Magento\Framework\Api\ExtensibleDataInte
      * @return \Neon\Rms\Api\Data\RmsDownloadInterface
      */
     public function setSuccess($success);
-
+  
+  
     /**
      * Get gz_url
      * @return string|null
@@ -226,6 +228,20 @@ interface RmsDownloadInterface extends \Magento\Framework\Api\ExtensibleDataInte
   * @return \Neon\Rms\Api\Data\RmsDownloadInterface
   */
   public function setSkuExcluded($skuExcluded);
+  
+  
+   /**
+   * Get rms_interaction
+   * @return string|null
+   */
+   public function getRmsInteraction();
+  
+    /**
+    * Set rms_interaction
+    * @param string $rms_interaction
+    * @return \Neon\Rms\Api\Data\RmsDownloadInterface
+    */
+    public function setRmsInteraction($rms_interaction);
   
   
   

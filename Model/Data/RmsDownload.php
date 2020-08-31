@@ -308,6 +308,28 @@ class RmsDownload extends \Magento\Framework\Api\AbstractExtensibleObject implem
   }
   
   
+    /**
+     * Get rms_interaction
+     * @return string|null
+     */
+    public function getRmsInteraction()
+    {
+        return $this->_get(self::RMS_INTERACTION);
+    }
+
+  
+    /**
+     * Set rms_interaction
+     * @param string rms_interaction
+     * @return \Neon\Rms\Api\Data\RmsDownloadInterface
+     */
+    public function setRmsInteraction($rms_interaction)
+    {
+        return $this->setData(self::RMS_INTERACTION,$rms_interaction);
+    }
+    
+  
+  
   
   
   
