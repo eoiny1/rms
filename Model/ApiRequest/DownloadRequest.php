@@ -25,6 +25,8 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
   
     protected $_rmsDownloadInterface;
   
+    protected $_rmsDownloadRepositoryInterface;
+  
 
      /**
      * @param \Neon\Rms\Helper\Config $config 
@@ -38,6 +40,7 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
        \Neon\Rms\Helper\Csv $csv,
        \Neon\Rms\Model\UpdateInventory $updateInventory,
        \Neon\Rms\Api\Data\RmsDownloadInterface $rmsDownloadInterface,
+       \Neon\Rms\Api\RmsDownloadRepositoryInterface $rmsDownloadRepositoryInterface,
        \Magento\Framework\Model\Context $context,
        \Magento\Framework\Registry $registry
     ) {
@@ -50,6 +53,8 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
         $this->_updateInventory = $updateInventory; 
       
         $this->_rmsDownloadInterface = $rmsDownloadInterface;
+      
+        $this->_rmsDownloadRepositoryInterface = $rmsDownloadRepositoryInterface;
       
         $this->setPostData();
 
@@ -74,6 +79,38 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
       
       
     }
+  
+  
+  
+    /**
+    *
+    */
+    public function makeRequest() {
+      
+       $this->_rmsDownloadInterface->setSuccess("0");
+       $response = $this->sendRequest();
+      
+       print_r($response);
+      
+      die();
+      
+       $interaction = $this->getInteraction($response);
+      
+       print_r($interaction);
+      
+      
+      
+       if($interaction) {
+         $this->_rmsDownloadInterface->setRmsInteraction($interaction);
+         $this->_rmsDownloadRepositoryInterface->save($this->_rmsDownloadInterface);   
+       }
+       
+      
+      
+       return $this;
+      
+    }
+  
   
   
     /**
