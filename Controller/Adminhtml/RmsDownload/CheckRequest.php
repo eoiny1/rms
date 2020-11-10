@@ -32,6 +32,12 @@ class CheckRequest extends \Magento\Backend\App\Action
     **/
     protected $_rmsDownloadRepository;
   
+    /**
+    *
+    **/
+    protected $_apiRequest;
+  
+  
 
     /**
      * Constructor
@@ -43,7 +49,8 @@ class CheckRequest extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\App\Request\Http $request,
-        \Neon\Rms\Model\RmsDownloadRepository $rmsDownloadRepository 
+        \Neon\Rms\Model\RmsDownloadRepository $rmsDownloadRepository,
+        \Neon\Rms\Model\ApiRequest\DownloadRequest $apiRequest
     ) {
         
         parent::__construct($context);
@@ -57,6 +64,9 @@ class CheckRequest extends \Magento\Backend\App\Action
       
         $this->_rmsDownloadRepository = $rmsDownloadRepository;
       
+      
+        $this->_apiRequest = $apiRequest;
+      
     }
 
     /**
@@ -67,17 +77,34 @@ class CheckRequest extends \Magento\Backend\App\Action
     public function execute()
     {
       
+         //WHERE WE ARE AT....CHECK OUT HERE....
+      
          $id = $this->request->getParam('rmsdownload_id');
          
          $download_request  = $this->_rmsDownloadRepository->get($id);
           
-         print_r($download_request->getSkuAdded());
+         #print_r($download_request->getRmsInteraction());
       
-        
+        $hasListComplied = $this->_apiRequest->getDownloadResponse($download_request->getRmsInteraction());
+      
+        if($hasListComplied) {
+              
+              $this->_apiRequest->downloadGz()->updateInventory();
+          
+        }
            
          #$faq = $this->faqsRepository->getById($id);
 
         #$this->_redirect($this->redirectUrl);
+      
+      /* 
+      # Put in redirect with message
+      # update download with infomation based on ID
+      #   - Load Donwload Result Module and Update class
+      # Check on time of 
+      */
+      
+      
       
     }
 }

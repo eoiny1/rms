@@ -83,22 +83,14 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
   
   
     /**
-    *
+    * @des Just making a quick request for interaction id and not full download
     */
     public function makeRequest() {
       
        $this->_rmsDownloadInterface->setSuccess("0");
        $response = $this->sendRequest();
       
-       print_r($response);
-      
-      die();
-      
        $interaction = $this->getInteraction($response);
-      
-       print_r($interaction);
-      
-      
       
        if($interaction) {
          $this->_rmsDownloadInterface->setRmsInteraction($interaction);
@@ -106,8 +98,40 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
        }
        
       
-      
        return $this;
+      
+    }
+  
+  
+    /**
+    *
+    */
+    public function getDownloadResponse() {
+      
+        $interaction = $this->_rmsDownloadInterface->getRmsInteraction();
+      
+        if($interaction) {
+                
+            $peekyPayload = $this->getPeekPayLoad($interaction);
+            printf("payload:%s \n",print_r($peekyPayload,1));
+
+           $response = $this->sendRequest(array("post_url"=>$this->config->getPeekUrl(),"payload"=>$peekyPayload));
+
+            printf("response:%s <br/>",print_r( $response,1));
+
+           if(isset($response["asset_url"])) {
+              $this->_rmsDownloadInterface->setGzUrl($response["asset_url"]);
+              $this->_rmsDownloadInterface->setSuccess("1");
+              $this->_asseturl = $response["asset_url"];
+
+              return true;
+           }
+        
+        }
+       
+       #printf("reposnse:%s \n",print_r($response,1));
+      
+       return false;
       
     }
   
@@ -268,6 +292,19 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
   public function getRmsDownloadInterface() {
     
     return $this->_rmsDownloadInterface;
+    
+  }
+  
+  
+  
+ /**
+  *
+  */
+  public function setRmsDownloadInterface($request) {
+    
+     $this->_rmsDownloadInterface = $request;
+    
+     return $this;
     
   }
   
