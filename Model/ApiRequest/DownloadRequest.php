@@ -108,7 +108,13 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
     */
     public function getDownloadResponse() {
       
-        $interaction = $this->_rmsDownloadInterface->getRmsInteraction();
+      //update times this has been tried
+      $old_download_attempts = $this->_rmsDownloadInterface->getDownloadAttempts();  
+      $new_download_attempts = 1 + $old_download_attempts;
+      $this->_rmsDownloadInterface->setDownloadAttempts($new_download_attempts);
+      
+
+      $interaction = $this->_rmsDownloadInterface->getRmsInteraction();
       
         if($interaction) {
                 

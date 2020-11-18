@@ -30,7 +30,8 @@ class DownloadRequest extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-       \Neon\Rms\Model\ApiRequest\DownloadRequest $downloadRequest
+       \Neon\Rms\Model\ApiRequest\DownloadRequest $downloadRequest,
+      \Neon\Rms\Model\GetLatestDownloadRequest $getLatestRequests
     ) {
         
         parent::__construct($context);
@@ -38,6 +39,8 @@ class DownloadRequest extends \Magento\Backend\App\Action
         $this->resultPageFactory = $resultPageFactory;
       
         $this->_downloadRequest = $downloadRequest;
+      
+        $this->_getLatestRequests  = $getLatestRequests;
     }
 
     /**
@@ -54,7 +57,11 @@ class DownloadRequest extends \Magento\Backend\App\Action
       * SEE \Neon\Rms\Model\ApiRequest\DownloadRequest $downloadRequest
       */
       
+        $this->_getLatestRequests->cleanUpOldRequest();
+      
         $this->_downloadRequest->makeRequest();
+      
+        $this->messageManager->addSuccess(__('Download Request was sent to RMS. Please come back in 5-10 mintues for full response and update.'));
      
        $this->_redirect($this->redirectUrl);
       
