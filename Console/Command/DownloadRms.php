@@ -66,7 +66,8 @@ class DownloadRms extends Command
         
         $this->_downloadRequest->call()
            ->downloadGz()
-           ->updateInventory();
+           ->updateInventory()
+           ->updatePriceAndCost();
            #->getRmsDownloadInterface();
       
       

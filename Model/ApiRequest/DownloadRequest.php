@@ -39,6 +39,7 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
        \Neon\Rms\Helper\File $file,
        \Neon\Rms\Helper\Csv $csv,
        \Neon\Rms\Model\UpdateInventory $updateInventory,
+       \Neon\Rms\Model\UpdatePriceCost $updatePriceCost,
        \Neon\Rms\Api\Data\RmsDownloadInterface $rmsDownloadInterface,
        \Neon\Rms\Api\RmsDownloadRepositoryInterface $rmsDownloadRepositoryInterface,
        \Magento\Framework\Model\Context $context,
@@ -51,6 +52,8 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
         $this->_csv_helper = $csv;
       
         $this->_updateInventory = $updateInventory; 
+      
+        $this->_updatePriceAndCost = $updatePriceCost;
       
         $this->_rmsDownloadInterface = $rmsDownloadInterface;
       
@@ -286,6 +289,22 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
        
     $this->_rmsDownloadInterface->setSkuExcluded($this->_updateInventory->getSkuAmountExcluded());   
     
+    return $this;
+    
+  }
+  
+  
+  /**
+  *
+  */
+  public function updatePriceAndCost() {
+
+    echo "\n\n NoW FOR PRICE UPDATE \n\n";
+    
+    $inventoryArray =  $this->getInventoryUpdate();
+    
+    $this->_updatePriceAndCost->updatePrice($inventoryArray)->updateCost($inventoryArray);
+
     return $this;
     
   }
