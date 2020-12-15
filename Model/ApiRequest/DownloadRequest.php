@@ -299,7 +299,7 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
   */
   public function updatePriceAndCost() {
 
-    echo "\n\n NoW FOR PRICE UPDATE \n\n";
+    echo "\n\n Now FOR PRICE UPDATE \n\n";
     
     $inventoryArray =  $this->getInventoryUpdate();
     

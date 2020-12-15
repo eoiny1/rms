@@ -74,19 +74,22 @@ class GetLatestDownloadRequest extends \Magento\Framework\Model\AbstractModel {
          $download_request = $this->getLatestRequest();
       
         foreach($download_request as $request) {
-          
+
+
           $hasListComplied = $this->_apiRequest
             ->setRmsDownloadInterface($request)
             ->getDownloadResponse();
       
            if($hasListComplied) {
-              $this->_apiRequest->downloadGz()->updateInventory();
+              $this->_apiRequest->downloadGz()->updateInventory()->updatePriceAndCost();
               $this->registerDownload(1);
             } 
           else{
              //registe falled download
               $this->registerDownload(0);
            }
+        
+
     
         }
       

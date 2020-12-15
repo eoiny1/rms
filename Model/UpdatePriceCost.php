@@ -71,10 +71,6 @@ class UpdatePriceCost extends \Magento\Framework\Model\AbstractModel {
       }
       
       
-    
-      #print_r($simples_we_have);
-      #echo "\n";
-
 
       return $this;
 
@@ -102,15 +98,10 @@ class UpdatePriceCost extends \Magento\Framework\Model\AbstractModel {
     }
 
    if($costDataObj_array){
-    echo "cost!!!!!!!!!!!!!!!!!!!! update!!!!!!!!";
       $this->_costStorageInterface->update($costDataObj_array);
     }
     
     
-  
-    print_r($simples_we_have);
-    echo "\n";
-
 
     return $this;
 
@@ -148,19 +139,13 @@ class UpdatePriceCost extends \Magento\Framework\Model\AbstractModel {
              $cost = floatval($simple->getCost());
             
              $rms_cost = floatval($inventoryArray[$sku]["cost"]);
-             echo $rms_cost;
-             echo "\n";
              $rms_price = floatval($inventoryArray[$sku]["price"]);
             
             
             if(($rms_cost!=$cost)||($rms_price!=$price)) {
 
-              echo "hey dickhead";
-              print_r($inventoryArray[$sku]["cost"]);
               echo $rms_cost;
-              echo "\n";
               echo $rms_price;
-              echo "\n";
 
                $simple_sku_price_cost_list[$sku] = [
                   "sku"=>$sku,
@@ -180,9 +165,7 @@ class UpdatePriceCost extends \Magento\Framework\Model\AbstractModel {
             return $simple_sku_price_cost_list;
  
           }
-    
-          #$this->_productFactory = 
-    
+
     
   }
   

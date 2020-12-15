@@ -75,7 +75,7 @@
 		<column name="created_at">
 			<settings>
 				<filter>text</filter>
-				<label translate="true">created_at</label>
+				<label translate="true">Created At</label>
 			</settings>
 		</column>
 	<!--
@@ -122,10 +122,11 @@
 		<column name="download_time">
 			<settings>
 				<filter>text</filter>
-				<label translate="true">download_time</label>
+				<label translate="true">Download Time</label>
 			</settings>
 		</column>
     
+    <!--
     <actionsColumn name="actions" class="Neon\Rms\Ui\Component\Listing\Column\CheckRequestActions" sortOrder="100">
       <settings>
          <indexField>rmsdownload_id</indexField>
@@ -133,6 +134,7 @@
          <resizeDefaultWidth>107</resizeDefaultWidth>
       </settings>
     </actionsColumn>
+    -->
     
 	</columns>
 </listing>
