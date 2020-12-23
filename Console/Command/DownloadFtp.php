@@ -50,7 +50,11 @@ class DownloadFtp extends Command
         #$output->writeln("Hello " . $name);
         $output->writeln("Started \n ");
         
-        $this->_connectNeonDb->getLatestFile()->createInventoryArray()->updateInventory();
+        $this->_connectNeonDb
+          ->getLatestFile()
+          ->createInventoryArray()
+          ->updateInventory()
+          ->updatePriceAndCost();
            #->getRmsDownloadInterface();
       
     

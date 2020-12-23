@@ -21,6 +21,8 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
   
     protected  $_updateInventory;
   
+    protected $_updatePriceAndCost;
+  
     protected $_inventoryUpdateArray = array();
   
     protected $_rmsDownloadInterface;

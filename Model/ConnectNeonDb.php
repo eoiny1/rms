@@ -33,6 +33,8 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
     protected $_csv_helper;
   
     protected $_updateInventory;
+  
+    protected $_updatePriceAndCost;
  
     protected $_file_helper;
   
@@ -50,14 +52,15 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
      */
     public function __construct(
       \Neon\Rms\Helper\Config $config,
-      \Neon\Rms\Helper\Csv $csv,
-      \Neon\Rms\Helper\File $file,
-      \Neon\Rms\Model\UpdateInventory $updateInventory,
+       \Neon\Rms\Helper\Csv $csv,
+       \Neon\Rms\Helper\File $file,
+       \Neon\Rms\Model\UpdateInventory $updateInventory,
+       \Neon\Rms\Model\UpdatePriceCost $updatePriceCost,
        \Magento\Framework\Model\Context $context,
        \Magento\Framework\Registry $registry,
-        \Neon\Rms\Helper\Timer $timer,
-        \Neon\Rms\Api\RmsDownloadRepositoryInterface $rmsDownloadRepositoryInterface,
-        \Neon\Rms\Api\Data\RmsDownloadInterface $rmsDownloadInterface
+       \Neon\Rms\Helper\Timer $timer,
+       \Neon\Rms\Api\RmsDownloadRepositoryInterface $rmsDownloadRepositoryInterface,
+       \Neon\Rms\Api\Data\RmsDownloadInterface $rmsDownloadInterface
     ) {
       
         $this->config = $config;
@@ -76,6 +79,7 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
       
         $this->_csv_helper = $csv;
         $this->_updateInventory = $updateInventory;
+        $this->_updatePriceAndCost = $updatePriceCost;
       
         $this->_file_helper = $file;
        
@@ -192,7 +196,32 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
     }
     
     
+    return $this;
+    
+    
   }
+  
+  
+  /**
+  *
+  */
+  public function updatePriceAndCost() {
+
+      echo "\n\n Now FOR PRICE UPDATE \n\n";
+    
+      $inventoryArray = $this->getInventoryUpdateArray();
+    
+      if($inventoryArray) {
+    
+          $this->_updatePriceAndCost->updatePrice($inventoryArray)->updateCost($inventoryArray);
+        
+      }
+
+    return $this;
+    
+  }
+  
+  
   
   
   /**
