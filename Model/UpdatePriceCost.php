@@ -54,16 +54,20 @@ class UpdatePriceCost extends \Magento\Framework\Model\AbstractModel {
       $simples_we_have = $this->whichSkusWehave($inventoryArray);
 
       $priceDataObj_array = array();
+      
+      if($simples_we_have) {
+      
+        foreach($simples_we_have as $simple_info) {
 
-      foreach($simples_we_have as $simple_info) {
+          $priceDataObj = $this->_basePriceInterfaceFactory->create();
 
-        $priceDataObj = $this->_basePriceInterfaceFactory->create();
+          $priceDataObj->setSku($simple_info["sku"]);
+          $priceDataObj->setPrice($simple_info["price"]);
+          $priceDataObj->setStoreId(0);
+          $priceDataObj_array[] = $priceDataObj;
+
+        }
         
-        $priceDataObj->setSku($simple_info["sku"]);
-        $priceDataObj->setPrice($simple_info["price"]);
-        $priceDataObj->setStoreId(0);
-        $priceDataObj_array[] = $priceDataObj;
-
       }
 
      if($priceDataObj_array){
@@ -85,23 +89,25 @@ class UpdatePriceCost extends \Magento\Framework\Model\AbstractModel {
     $simples_we_have = $this->whichSkusWehave($inventoryArray);
 
     $costDataObj_array = array();
-
-    foreach($simples_we_have as $simple_info) {
-
-      $costDataObj = $this->_costInterfaceFactory->create();
-      
-      $costDataObj->setSku($simple_info["sku"]);
-      $costDataObj->setCost($simple_info["cost"]);
-      $costDataObj->setStoreId(0);
-      $costDataObj_array[] = $costDataObj;
-
-    }
-
-   if($costDataObj_array){
-      $this->_costStorageInterface->update($costDataObj_array);
-    }
     
+    if($simples_we_have) {
+
+      foreach($simples_we_have as $simple_info) {
+
+        $costDataObj = $this->_costInterfaceFactory->create();
+
+        $costDataObj->setSku($simple_info["sku"]);
+        $costDataObj->setCost($simple_info["cost"]);
+        $costDataObj->setStoreId(0);
+        $costDataObj_array[] = $costDataObj;
+
+      }
+
+     if($costDataObj_array){
+        $this->_costStorageInterface->update($costDataObj_array);
+      }
     
+    }
 
     return $this;
 

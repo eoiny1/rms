@@ -61,6 +61,9 @@ class LastOrders extends \Magento\Framework\Model\AbstractModel {
   */
   protected  function getLastOrderItems() {
     
+    //Hack for the moment
+    return  $sku_exclude_array = [];
+    
     $orderItems = $this->_orderItemRepository->getList($this->buildSearchCriteria())->getItems();
     
     $sku_exclude_array = [];
