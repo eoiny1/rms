@@ -23,11 +23,15 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
   
     protected $_lastorders;
   
+    protected $_getOrdersToShip;
+  
     protected $_csv_helper;
   
     protected $_getSalableQuantityDataBySku;
   
     protected $_sku_amount_uploaded = 0;
+  
+    protected $_qty_amount_added = 0;
   
     protected $_sku_amount_excluded = 0;
   
@@ -46,6 +50,7 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
       \Magento\CatalogImportExport\Model\StockItemImporterInterface $importer,
       \Magento\InventoryCatalogApi\Model\GetProductIdsBySkusInterface $productIdBySku,
       \Neon\Rms\Model\UpdateInventory\LastOrders $lastorders,
+      \Neon\Rms\Model\UpdateInventory\OrdersToShip $getOrdersToShip,
       \Neon\Rms\Helper\Csv $csv,
       \Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku $getSalableQuantityDataBySku
     ) {
@@ -58,6 +63,7 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
         $this->_importer = $importer;
         $this->_productIdBySku = $productIdBySku;
         $this->_lastorders = $lastorders;
+        $this->_getOrdersToShip = $getOrdersToShip;
         $this->_getSalableQuantityDataBySku = $getSalableQuantityDataBySku;
       
         $this->_csv_helper = $csv;
@@ -113,6 +119,8 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
     
     $backupOfPerviousArray = [];
     
+    $update_qty_ammount = 0;
+    
     foreach ($sourceItems as $sourceItem) { 
       
       $sku = $sourceItem->getSku();
@@ -138,6 +146,11 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
                   if($update_qty > $salable_qty)
                       continue;
                 }
+              
+              //Make sure we always have the right amount to ship
+              if(!$this->_getOrdersToShip->isRmsQtyGood($sku,$update_qty))
+                    continue;
+              
           
 
                  $stockUpdateflatArray[] = [
@@ -157,6 +170,9 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
                    'website_id' => 0,
                    'stock_id' => 1,
                   ];
+              
+              
+                $update_qty_ammount = $update_qty_ammount+$update_qty;
             
             }
 
@@ -175,9 +191,9 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
      
     
     $this->setSkuAmountUploaded(count($stockUpdateArray));
+    $this->setQtyAdded($update_qty_ammount);
     $stockUpdateArray = $this->addProductId($stockUpdateArray);
-    
-    
+        
     
     return $stockUpdateArray;
 
@@ -276,6 +292,25 @@ class UpdateInventory extends \Magento\Framework\Model\AbstractModel {
     
   }
   
+  
+  /**
+  *
+  */
+  public function setQtyAdded($amount) {
+    
+    $this->_qty_amount_added = $amount;
+    
+  }
+  
+  
+  /**
+  *
+  */
+  public function  getQtyAdded() {
+    
+    return $this->_qty_amount_added;
+    
+  }
 
 
   /**
