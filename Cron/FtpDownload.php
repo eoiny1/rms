@@ -40,7 +40,7 @@ class FtpDownload
        #$this->logger->addInfo("Cronjob SendCreditMemo is executed.");
       
       if($this->_config->getEnableFtpCron()) {
-        $this->_connectNeonDb->getLatestFile()->createInventoryArray()->updateInventory();
+        $this->_connectNeonDb->getLatestFile()->createInventoryArray()->updateInventory()->updatePriceAndCost();
       }
       
     }
