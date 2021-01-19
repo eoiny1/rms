@@ -106,22 +106,28 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
        ftp_pasv($this->_conn_id, true);
       
         try {
+          
+           $file_size = ftp_size($this->_conn_id,$server_file);
+          
+           if($file_size != -1) {
 
-           // try to download $server_file and save to $local_file
-          if (ftp_get($this->_conn_id,$local_file,$server_file,FTP_BINARY)) {
+               // try to download $server_file and save to $local_file
+              if (ftp_get($this->_conn_id,$local_file,$server_file,FTP_BINARY)) {
 
-            chmod($local_file, 0777); 
+                chmod($local_file, 0777); 
 
-            $new_server_file = $this->getNewServerFileName();
-            ftp_rename($this->_conn_id,$server_file,$new_server_file);
-            
-            $this->_rmsDownloadInterface->setSuccess("1");
-            
-            $this->_rmsDownloadInterface->setCsvName(basename($local_file));
+                $new_server_file = $this->getNewServerFileName();
+                ftp_rename($this->_conn_id,$server_file,$new_server_file);
 
-            $this->setDownloadedCsv($local_file);
+                $this->_rmsDownloadInterface->setSuccess("1");
 
-          } 
+                $this->_rmsDownloadInterface->setCsvName(basename($local_file));
+
+                $this->setDownloadedCsv($local_file);
+
+              } 
+             
+           } 
         
         }catch(Exception $e) {
 	        
@@ -139,32 +145,36 @@ class ConnectNeonDb extends \Magento\Framework\Model\AbstractModel {
   **/
   public function createInventoryArray() {
     
-     $raw_array  = $this->_csv_helper->readCsv($this->getDownloadedCsv());
+    if($this->getDownloadedCsv()) {
     
-   
-     if(!empty($raw_array)) {
-       
-       $inventoryUpdateArray = array();
-       
-       foreach($raw_array as $data) {
-         
-           $inventoryUpdateArray[$data["sku"]] = array(
-              "sku"=>$data["sku"],
-              "qty"=>$data["qty"],
-              "price"=>$data["product_price"],
-              "cost"=>$data["product_cost"]
-            );
-         
+       $raw_array  = $this->_csv_helper->readCsv($this->getDownloadedCsv());
+
+
+       if(!empty($raw_array)) {
+
+         $inventoryUpdateArray = array();
+
+         foreach($raw_array as $data) {
+
+             $inventoryUpdateArray[$data["sku"]] = array(
+                "sku"=>$data["sku"],
+                "qty"=>$data["qty"],
+                "price"=>$data["product_price"],
+                "cost"=>$data["product_cost"]
+              );
+
+         }
+
+
+          #print_r($inventoryUpdateArray);
+
+
+         $this->setInventoryUpdateArray($inventoryUpdateArray);
+
+
        }
-       
-       
-        #print_r($inventoryUpdateArray);
-       
-       
-       $this->setInventoryUpdateArray($inventoryUpdateArray);
       
-       
-     }
+    }
      
       
     return $this;

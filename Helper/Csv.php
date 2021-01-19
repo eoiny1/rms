@@ -90,6 +90,8 @@ class Csv extends AbstractHelper
   */
   public function writeToCsvWithName($csvArray,$name) {
     
+    if($csvArray) {
+      
     $header = array_keys($csvArray[0]); 
     array_unshift($csvArray, $header);
     
@@ -101,6 +103,8 @@ class Csv extends AbstractHelper
         ->setEnclosure('"')
         ->setDelimiter(',')
         ->saveData($new_file_path,$csvArray);
+      
+    }
     
   }
     
