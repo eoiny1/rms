@@ -126,6 +126,22 @@
 			</settings>
 		</column>
     
+    		<column name="qty_added">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Qty Added</label>
+			</settings>
+		</column>
+    
+     <column name="sku_added">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Number of SKUs Updated</label>
+			</settings>
+		</column>
+    
+  
+    
     <!--
     <actionsColumn name="actions" class="Neon\Rms\Ui\Component\Listing\Column\CheckRequestActions" sortOrder="100">
       <settings>

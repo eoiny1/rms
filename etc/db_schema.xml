@@ -74,6 +74,7 @@
 		<column length="255" name="csv_name" nullable="true" xsi:type="varchar"/>
 		<column name="download_type" nullable="true" xsi:type="smallint"/>
     <column identity="false" name="sku_added" nullable="true" xsi:type="int"/>
+    <column identity="false" name="qty_added" nullable="true" xsi:type="int"/>
     <column identity="false" name="sku_excluded" nullable="true" xsi:type="int"/>
     <column name="rms_interaction" nullable="true" xsi:type="varchar"/>
 	</table>

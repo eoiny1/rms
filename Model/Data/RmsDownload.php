@@ -287,6 +287,30 @@ class RmsDownload extends \Magento\Framework\Api\AbstractExtensibleObject implem
    }
   
   
+  
+  /**
+    * Get qty_added
+    * @return string|null
+    */
+    public function getQtyAdded() 
+    {
+      
+      return $this->_get(self::QTY_ADDED);
+      
+    }
+  
+   /**
+   * Set qty_added
+   * @param string $qtyAdded
+   * @return \Neon\Rms\Api\Data\RmsDownloadInterface
+   */
+   public function setQtyAdded($qtyAdded)
+   {
+      return $this->setData(self::QTY_ADDED,$qtyAdded); 
+   }
+  
+  
+  
   /**
   * Get sku_excluded
   * @return string|null

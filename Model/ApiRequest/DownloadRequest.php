@@ -288,6 +288,8 @@ class DownloadRequest extends \Neon\Rms\Model\ApiRequest {
     $this->_updateInventory->importQty($inventoryArray);
     
     $this->_rmsDownloadInterface->setSkuAdded($this->_updateInventory->getSkuAmountUploaded());
+    
+     $this->_rmsDownloadInterface->setQtyAdded($this->_updateInventory->getQtyAdded());
        
     $this->_rmsDownloadInterface->setSkuExcluded($this->_updateInventory->getSkuAmountExcluded());   
     

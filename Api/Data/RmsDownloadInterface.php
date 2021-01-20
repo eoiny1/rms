@@ -24,6 +24,7 @@ interface RmsDownloadInterface extends \Magento\Framework\Api\ExtensibleDataInte
     const CREATED_AT = 'created_at';
     const GZ_URL = 'gz_url';
     const SKU_ADDED = 'sku_added';
+    const QTY_ADDED = 'qty_added';
     const SKU_EXCLUDED = 'sku_excluded';
     const RMS_INTERACTION = 'rms_interaction';
 
@@ -213,6 +214,21 @@ interface RmsDownloadInterface extends \Magento\Framework\Api\ExtensibleDataInte
    * @return \Neon\Rms\Api\Data\RmsDownloadInterface
    */
    public function setSkuAdded($skuAdded);
+  
+  
+    /**
+    * Get qty_added
+    * @return string|null
+    */
+    public function getQtyAdded();
+  
+   /**
+   * Set qty_added
+   * @param string $qtyAdded
+   * @return \Neon\Rms\Api\Data\RmsDownloadInterface
+   */
+   public function setQtyAdded($qtyAdded);
+  
   
   
   /**
