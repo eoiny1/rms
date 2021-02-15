@@ -2,7 +2,7 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
 	
   <table comment="neon_rms_rmssend Table" engine="innodb" name="neon_rms_rmssend" resource="default">
-		<column comment="Entity Id" identity="true" name="rmssend_id" nullable="false" padding="6" unsigned="false" xsi:type="smallint"/>
+		<column comment="Entity Id" identity="true" name="rmssend_id" nullable="false" padding="6" unsigned="false" xsi:type="int"/>
 		<constraint referenceId="PRIMARY" xsi:type="primary">
 			<column name="rmssend_id"/>
 		</constraint>
@@ -23,7 +23,7 @@
 	</table>
   
 	<table comment="neon_rms_rmssendorder Table" engine="innodb" name="neon_rms_rmssendorder" resource="default">
-		<column comment="Entity Id" identity="true" name="rmssendorder_id" nullable="false" padding="6" unsigned="false" xsi:type="smallint"/>
+		<column comment="Entity Id" identity="true" name="rmssendorder_id" nullable="false" padding="6" unsigned="false" xsi:type="int"/>
 		<constraint referenceId="PRIMARY" xsi:type="primary">
 			<column name="rmssendorder_id"/>
 		</constraint>
@@ -40,7 +40,7 @@
 	</table>
 	
   <table comment="neon_rms_rmssendcr Table" engine="innodb" name="neon_rms_rmssendcr" resource="default">
-		<column comment="Entity Id" identity="true" name="rmssendcr_id" nullable="false" padding="6" unsigned="false" xsi:type="smallint"/>
+		<column comment="Entity Id" identity="true" name="rmssendcr_id" nullable="false" padding="6" unsigned="false" xsi:type="int"/>
 		<constraint referenceId="PRIMARY" xsi:type="primary">
 			<column name="rmssendcr_id"/>
 		</constraint>
@@ -58,7 +58,7 @@
 	</table>
   
 	<table comment="neon_rms_rmsdownload Table" engine="innodb" name="neon_rms_rmsdownload" resource="default">
-		<column comment="Entity Id" identity="true" name="rmsdownload_id" nullable="false" padding="6" unsigned="false" xsi:type="smallint"/>
+		<column comment="Entity Id" identity="true" name="rmsdownload_id" nullable="false" padding="6" unsigned="false" xsi:type="int"/>
 		<constraint referenceId="PRIMARY" xsi:type="primary">
 			<column name="rmsdownload_id"/>
 		</constraint>
