@@ -144,14 +144,13 @@ class UpdatePriceCost extends \Magento\Framework\Model\AbstractModel {
              $price = floatval($simple->getPrice());
              $cost = floatval($simple->getCost());
             
+            if(isset($inventoryArray[$sku])) {
+              
              $rms_cost = floatval($inventoryArray[$sku]["cost"]);
              $rms_price = floatval($inventoryArray[$sku]["price"]);
             
             
             if(($rms_cost!=$cost)||($rms_price!=$price)) {
-
-              echo $rms_cost;
-              echo $rms_price;
 
                $simple_sku_price_cost_list[$sku] = [
                   "sku"=>$sku,
@@ -159,9 +158,10 @@ class UpdatePriceCost extends \Magento\Framework\Model\AbstractModel {
                   "cost"=>$rms_cost
                 ];
               
-            }
+             }
 
-          
+            }
+            
           }
         
           if($simple_sku_price_cost_list) {
