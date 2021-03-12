@@ -25,7 +25,6 @@ class GetDownloadRequest
        \Neon\Rms\Model\GetLatestDownloadRequest $getLatestDownloadRequest
       )
     {
-      echo 'yo!!!';
 
         $this->_getLatestDownloadRequest = $getLatestDownloadRequest;
         $this->logger = $logger;
@@ -39,7 +38,7 @@ class GetDownloadRequest
      */
     public function execute() {
       
-      $this->logger->addInfo("Download Request Asked For...");
+      #$this->logger->addInfo("Download Request Asked For...");
       
       $this->_getLatestDownloadRequest->updateFromLatestRequest();
     
